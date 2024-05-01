@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant Register</title>
+</head>
+<body>
+<form action="/restaurant/register" method="post">
+    식당 이름: <input type="text" name="restaurantName" required><br>
+    식당 전화번호: <input type="text" name="restaurantPhoneNumber" required><br>
+    식당 주소: <input type="text" name="restaurantAddress" required><br>
+    식당 운영시간: <input type="text" name="restaurantTime" required><br>
+    식당 설명: <textarea name="restaurantDescription" rows="4" required></textarea><br>
+    <input type="submit" value="식당 가입">
+</form>
+</body>
+</html>
+

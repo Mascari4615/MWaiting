@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>restaurant list</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        /*이중선 제거*/
+        th, td {
+            text-align: center;
+            border: 1px solid #000;
+            vertical-align: top; /* 위 */
+            vertical-align: bottom; /* 아래 */
+            vertical-align: middle; /* 가운데 */
+        }
+    </style>
+</head>
+<body>
+<h2>restaurant-list.html</h2>
+<table>
+    <tr>
+        <th>id</th>
+        <th>memberEntity.memberEmail</th>
+        <th>restaurantName</th>
+        <th>restaurantPhoneNumber</th>
+        <th>restaurantAddress</th>
+        <th>restaurantTime</th>
+        <th>restaurantDescription</th>
+        <th>상세조회</th>
+        <th>웨이팅</th>
+        <th>삭제</th>
+    </tr>
+    <tr th:each="restaurant: ${restaurantList}">
+        <td th:text="${restaurant.id}"></td>
+        <td th:text="${restaurant.memberEntity.memberEmail}"></td>
+        <td th:text="${restaurant.restaurantName}"></td>
+        <td th:text="${restaurant.restaurantPhoneNumber}"></td>
+        <td th:text="${restaurant.restaurantAddress}"></td>
+        <td th:text="${restaurant.restaurantTime}"></td>
+        <td th:text="${restaurant.restaurantDescription}"></td>
+        <td>
+            <a th:href="@{|/restaurant/${restaurant.id}|}">조회</a>
+        </td>
+        <td>
+            <form th:action="@{|/ticket/${restaurant.id}|}" method="post">
+                <input type="submit" value="웨이팅">
+            </form>
+        </td>
+        <td>
+            <a th:href="@{|/restaurant/delete/${restaurant.id}|}">삭제</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
