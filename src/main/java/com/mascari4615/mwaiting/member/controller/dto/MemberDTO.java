@@ -1,6 +1,6 @@
 package com.mascari4615.mwaiting.member.controller.dto;
 
-import com.mascari4615.mwaiting.member.repository.entity.MemberEntity;
+import com.mascari4615.mwaiting.member.repository.entity.Member;
 import lombok.*;
 
 @Getter
@@ -10,16 +10,16 @@ import lombok.*;
 @ToString
 public class MemberDTO {
     private Long id;
-    private String memberEmail;
-    private String memberPassword;
-    private String memberName;
+    private String email;
+    private String password;
+    private String name;
 
-    public static MemberDTO toMemberDTO(MemberEntity memberEntity) {
+    public static MemberDTO toMemberDTO(Member member) {
         MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setId(memberEntity.getId());
-        memberDTO.setMemberEmail(memberEntity.getMemberEmail());
-        memberDTO.setMemberPassword(memberEntity.getMemberPassword());
-        memberDTO.setMemberName(memberEntity.getMemberName());
+        memberDTO.setId(member.getId());
+        memberDTO.setEmail(member.getEmail());
+        memberDTO.setPassword(member.getPassword());
+        memberDTO.setName(member.getName());
         return memberDTO;
     }
 }

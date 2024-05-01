@@ -23,7 +23,7 @@
 <table>
     <tr>
         <th>id</th>
-        <th>memberEntity.memberEmail</th>
+        <th>member.memberEmail</th>
         <th>restaurantName</th>
         <th>restaurantPhoneNumber</th>
         <th>restaurantAddress</th>
@@ -32,12 +32,12 @@
     </tr>
     <tr>
         <td th:text="${restaurant.id}"></td>
-        <td th:text="${restaurant.memberEntity.memberEmail}"></td>
-        <td th:text="${restaurant.restaurantName}"></td>
-        <td th:text="${restaurant.restaurantPhoneNumber}"></td>
-        <td th:text="${restaurant.restaurantAddress}"></td>
-        <td th:text="${restaurant.restaurantTime}"></td>
-        <td th:text="${restaurant.restaurantDescription}"></td>
+        <td th:text="${restaurant.member.getEmail}"></td>
+        <td th:text="${restaurant.getName}"></td>
+        <td th:text="${restaurant.getPhoneNumber}"></td>
+        <td th:text="${restaurant.getAddress}"></td>
+        <td th:text="${restaurant.getTime}"></td>
+        <td th:text="${restaurant.getDescription}"></td>
     </tr>
 </table>
 <a th:href="@{|/restaurant/qr/${restaurant.id}|}">QR보기</a>

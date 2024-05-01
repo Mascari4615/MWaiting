@@ -6,9 +6,9 @@ import lombok.Data;
 
 public class RestaurantRegisterRequest {
     private Long id;
-    private String restaurantName;
-    private String restaurantPhoneNumber;
-    private String restaurantAddress;
-    private String restaurantTime;
-    private String restaurantDescription;
+    private String name;
+    private String phoneNumber;
+    private String address;
+    private String time;
+    private String description;
 }

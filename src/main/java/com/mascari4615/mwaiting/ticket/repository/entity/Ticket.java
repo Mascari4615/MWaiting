@@ -1,7 +1,7 @@
 package com.mascari4615.mwaiting.ticket.repository.entity;
 
-import com.mascari4615.mwaiting.member.repository.entity.MemberEntity;
-import com.mascari4615.mwaiting.restaurant.repository.entity.RestaurantEntity;
+import com.mascari4615.mwaiting.member.repository.entity.Member;
+import com.mascari4615.mwaiting.restaurant.repository.entity.Restaurant;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class TicketEntity {
+public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AutoIncrement
@@ -20,11 +20,11 @@ public class TicketEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "RESTAURANT_ID")
-    private RestaurantEntity restaurantEntity;
+    private Restaurant restaurant;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
-    private MemberEntity memberEntity;
+    private Member member;
 
     @Column
     private Long ticketNumber;

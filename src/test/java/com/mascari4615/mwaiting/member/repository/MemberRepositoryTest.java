@@ -1,6 +1,6 @@
 package com.mascari4615.mwaiting.member.repository;
 
-import com.mascari4615.mwaiting.member.repository.entity.MemberEntity;
+import com.mascari4615.mwaiting.member.repository.entity.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +12,7 @@ public class MemberRepositoryTest {
 
     @Test
     public void crudTest() {
-        MemberEntity member = MemberEntity.builder()
+        Member member = Member.builder()
                 .id(0L)
                 .memberEmail("test@gmail.com")
                 .memberName("test")
@@ -22,6 +22,6 @@ public class MemberRepositoryTest {
         memberRepository.save(member);
 
         //get test
-        MemberEntity foundMember = memberRepository.findById(1L).get();
+        Member foundMember = memberRepository.findById(1L).get();
     }
 }

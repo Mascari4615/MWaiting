@@ -1,7 +1,7 @@
 package com.mascari4615.mwaiting.restaurant.controller.dto;
 
-import com.mascari4615.mwaiting.member.repository.entity.MemberEntity;
-import com.mascari4615.mwaiting.restaurant.repository.entity.RestaurantEntity;
+import com.mascari4615.mwaiting.member.repository.entity.Member;
+import com.mascari4615.mwaiting.restaurant.repository.entity.Restaurant;
 import lombok.*;
 
 @Getter
@@ -11,22 +11,22 @@ import lombok.*;
 @ToString
 public class RestaurantDTO {
     private Long id;
-    private MemberEntity memberEntity;
-    private String restaurantName;
-    private String restaurantPhoneNumber;
-    private String restaurantAddress;
-    private String restaurantTime;
-    private String restaurantDescription;
+    private Member member;
+    private String name;
+    private String phoneNumber;
+    private String address;
+    private String time;
+    private String description;
 
-    public static RestaurantDTO toRestaurantDTO(RestaurantEntity restaurantEntity) {
+    public static RestaurantDTO toRestaurantDTO(Restaurant restaurant) {
         RestaurantDTO restaurantDTO = new RestaurantDTO();
-        restaurantDTO.setId(restaurantEntity.getId());
-        restaurantDTO.setMemberEntity(restaurantEntity.getMemberEntity());
-        restaurantDTO.setRestaurantName(restaurantEntity.getRestaurantName());
-        restaurantDTO.setRestaurantPhoneNumber(restaurantEntity.getRestaurantPhoneNumber());
-        restaurantDTO.setRestaurantAddress(restaurantEntity.getRestaurantAddress());
-        restaurantDTO.setRestaurantTime(restaurantEntity.getRestaurantTime());
-        restaurantDTO.setRestaurantDescription(restaurantEntity.getRestaurantDescription());
+        restaurantDTO.setId(restaurant.getId());
+        restaurantDTO.setMember(restaurant.getMember());
+        restaurantDTO.setName(restaurant.getName());
+        restaurantDTO.setPhoneNumber(restaurant.getPhoneNumber());
+        restaurantDTO.setAddress(restaurant.getAddress());
+        restaurantDTO.setTime(restaurant.getTime());
+        restaurantDTO.setDescription(restaurant.getDescription());
         return restaurantDTO;
     }
 }

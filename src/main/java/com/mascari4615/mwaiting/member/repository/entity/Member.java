@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class MemberEntity {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AutoIncrement
@@ -19,19 +19,19 @@ public class MemberEntity {
     private Long id;
 
     @Column(unique = true) // unique 제약 조건 추가
-    private String memberEmail; // 카멜 케이스로 만들어둬도, DB 들어갈때는 _들어감 (설정으로 변경 가능)
+    private String email; // 카멜 케이스로 만들어둬도, DB 들어갈때는 _들어감 (설정으로 변경 가능)
 
     @Column
-    private String memberPassword;
+    private String password;
 
     @Column
-    private String memberName;
+    private String name;
 
-    public static MemberEntity toMemberEntity(MemberDTO memberDTO) {
-        MemberEntity member = new MemberEntity();
-        member.setMemberEmail(memberDTO.getMemberEmail());
-        member.setMemberPassword(memberDTO.getMemberPassword());
-        member.setMemberName(memberDTO.getMemberName());
+    public static Member toMemberEntity(MemberDTO memberDTO) {
+        Member member = new Member();
+        member.setEmail(memberDTO.getEmail());
+        member.setPassword(memberDTO.getPassword());
+        member.setName(memberDTO.getName());
         return member;
     }
 }

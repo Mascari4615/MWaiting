@@ -3,7 +3,7 @@ package com.mascari4615.mwaiting.member.service;
 import com.mascari4615.mwaiting.member.controller.dto.JoinRequest;
 import com.mascari4615.mwaiting.member.controller.dto.MemberDTO;
 import com.mascari4615.mwaiting.member.repository.MemberRepository;
-import com.mascari4615.mwaiting.member.repository.entity.MemberEntity;
+import com.mascari4615.mwaiting.member.repository.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +34,8 @@ public class MemberServiceImpl implements MemberService {
         // 2. Repository의 save 메소드 호출
 
         // Repository의 save 메소드 호출 (조건. entity 객체를 넘겨줘야 함)
-        MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDTO);
-        memberRepository.save(memberEntity); // 이건 이름 save 메소드여야 함
+        Member member = Member.toMemberEntity(memberDTO);
+        memberRepository.save(member); // 이건 이름 save 메소드여야 함
     }
 
     @Override
@@ -44,13 +44,13 @@ public class MemberServiceImpl implements MemberService {
         // 1. 회원이 입력한 이메일로 DB에서 조회
         // 2. DB에서 조회한 비밀번호와 사용자가 입력한 비밀번호가 일치하는지 판단
 
-        Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(memberDTO.getMemberEmail());
+        Optional<Member> byMemberEmail = memberRepository.findByEmail(memberDTO.getEmail());
         if (byMemberEmail.isPresent()) {
             // 조회 결과가 있다 (해당 이메일을 가진 회원 정보가 있다)
-            MemberEntity memberEntity = byMemberEmail.get(); // Optional 벗기기
-            System.out.println("memberEntity = " + memberEntity);
-            if (memberEntity.getMemberPassword().equals(memberDTO.getMemberPassword())) {
-                return MemberDTO.toMemberDTO(memberEntity);
+            Member member = byMemberEmail.get(); // Optional 벗기기
+            System.out.println("memberEntity = " + member);
+            if (member.getPassword().equals(memberDTO.getPassword())) {
+                return MemberDTO.toMemberDTO(member);
                 // 비밀번호 일치
             } else {
                 // 비밀번호 불일치 (로그인 실패)
@@ -64,16 +64,16 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<MemberDTO> findAll() {
-        List<MemberEntity> memberEntityList = memberRepository.findAll();
+        List<Member> memberList = memberRepository.findAll();
         List<MemberDTO> memberDTOList = new ArrayList<>();
-        for (MemberEntity memberEntity : memberEntityList) {
-            memberDTOList.add(MemberDTO.toMemberDTO(memberEntity));
+        for (Member member : memberList) {
+            memberDTOList.add(MemberDTO.toMemberDTO(member));
         }
         return memberDTOList;
     }
 
     public MemberDTO findById(Long id) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
+        Optional<Member> optionalMemberEntity = memberRepository.findById(id);
         // return memberEntity.map(MemberDTO::toMemberDTO).orElse(null);
 
         if (optionalMemberEntity.isPresent()) {

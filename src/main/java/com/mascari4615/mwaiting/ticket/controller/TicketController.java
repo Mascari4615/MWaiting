@@ -1,9 +1,9 @@
 package com.mascari4615.mwaiting.ticket.controller;
 
 import com.mascari4615.mwaiting.member.repository.MemberRepository;
-import com.mascari4615.mwaiting.member.repository.entity.MemberEntity;
+import com.mascari4615.mwaiting.member.repository.entity.Member;
 import com.mascari4615.mwaiting.restaurant.repository.RestaurantRepository;
-import com.mascari4615.mwaiting.restaurant.repository.entity.RestaurantEntity;
+import com.mascari4615.mwaiting.restaurant.repository.entity.Restaurant;
 import com.mascari4615.mwaiting.ticket.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +28,12 @@ public class TicketController {
         System.out.println("RestaurantController.save");
         System.out.println("memberID = " + memberID);
 
-        Optional<RestaurantEntity> restaurantEntity = restaurantRepository.findById(restaurantID);
-        RestaurantEntity restaurant = restaurantEntity.get();
+        Optional<Restaurant> restaurantEntity = restaurantRepository.findById(restaurantID);
+        Restaurant restaurant = restaurantEntity.get();
         System.out.println(restaurant);
 
-        Optional<MemberEntity> memberEntity = memberRepository.findByMemberEmail(memberID);
-        MemberEntity member = memberEntity.get();
+        Optional<Member> memberEntity = memberRepository.findByEmail(memberID);
+        Member member = memberEntity.get();
         System.out.println(member);
 
         ticketService.save(restaurant, member);

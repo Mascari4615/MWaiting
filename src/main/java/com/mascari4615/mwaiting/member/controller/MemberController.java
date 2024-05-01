@@ -102,8 +102,8 @@ public class MemberController {
 
         if (loginResult != null) {
             // 세션 : 정보 유지 (로그인 정보 유지)
-            session.setAttribute("memberID", loginResult.getMemberEmail());
-            System.out.println("memberID = " + loginResult.getMemberEmail());
+            session.setAttribute("memberID", loginResult.getEmail());
+            System.out.println("memberID = " + loginResult.getEmail());
             System.out.println("memberDTO = " + memberDTO);
             return "hello";
         } else {

@@ -6,7 +6,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.mascari4615.mwaiting.member.repository.MemberRepository;
-import com.mascari4615.mwaiting.member.repository.entity.MemberEntity;
+import com.mascari4615.mwaiting.member.repository.entity.Member;
 import com.mascari4615.mwaiting.restaurant.controller.dto.RestaurantDTO;
 import com.mascari4615.mwaiting.restaurant.controller.dto.RestaurantRegisterRequest;
 import com.mascari4615.mwaiting.restaurant.service.RestaurantService;
@@ -44,8 +44,8 @@ public class RestaurantController {
         System.out.println("RestaurantRegisterRequest = " + restaurantRegisterRequest);
         System.out.println("memberID = " + memberID);
 
-        Optional<MemberEntity> memberEntity = memberRepository.findByMemberEmail(memberID);
-        MemberEntity member = memberEntity.get();
+        Optional<Member> memberEntity = memberRepository.findByEmail(memberID);
+        Member member = memberEntity.get();
         System.out.println("memberEntity = " + member);
         restaurantService.save(restaurantRegisterRequest, member);
 
