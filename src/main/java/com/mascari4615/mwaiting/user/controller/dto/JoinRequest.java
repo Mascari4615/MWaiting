@@ -1,13 +1,11 @@
-package com.mascari4615.mwaiting.member.controller.dto;
+package com.mascari4615.mwaiting.user.controller.dto;
 
 import lombok.Data;
 
 @Data
 public class JoinRequest {
     private String id;
-
     private String name;
-
     private String phoneNumber;
 
     // Alt + Insert

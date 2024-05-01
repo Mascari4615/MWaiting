@@ -1,6 +1,6 @@
 package com.mascari4615.mwaiting.restaurant.repository.entity;
 
-import com.mascari4615.mwaiting.member.repository.entity.Member;
+import com.mascari4615.mwaiting.user.repository.entity.User;
 import com.mascari4615.mwaiting.restaurant.controller.dto.RestaurantDTO;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,8 +20,8 @@ public class Restaurant {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
     @Column
     private String name;
@@ -40,7 +40,7 @@ public class Restaurant {
 
     public static Restaurant toRestaurantEntity(RestaurantDTO restaurantDTO) {
         Restaurant restaurant = new Restaurant();
-        // restaurant.setMemberEntity(restaurantDTO.getMemberEntity());
+        // restaurant.setUser(restaurantDTO.getUser());
         restaurant.setName(restaurantDTO.getName());
         restaurant.setPhoneNumber(restaurantDTO.getPhoneNumber());
         restaurant.setAddress(restaurantDTO.getAddress());

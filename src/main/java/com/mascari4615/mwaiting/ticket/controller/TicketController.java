@@ -1,7 +1,7 @@
 package com.mascari4615.mwaiting.ticket.controller;
 
-import com.mascari4615.mwaiting.member.repository.MemberRepository;
-import com.mascari4615.mwaiting.member.repository.entity.Member;
+import com.mascari4615.mwaiting.user.repository.UserRepository;
+import com.mascari4615.mwaiting.user.repository.entity.User;
 import com.mascari4615.mwaiting.restaurant.repository.RestaurantRepository;
 import com.mascari4615.mwaiting.restaurant.repository.entity.Restaurant;
 import com.mascari4615.mwaiting.ticket.service.TicketService;
@@ -20,23 +20,23 @@ import java.util.Optional;
 public class TicketController {
 
     private final RestaurantRepository restaurantRepository;
-    private final MemberRepository memberRepository;
+    private final UserRepository userRepository;
     private final TicketService ticketService;
 
     @PostMapping("/ticket/{restaurantID}")
-    public String createTicket(@SessionAttribute(name = "memberID", required = false) String memberID, @PathVariable Long restaurantID) {
+    public String createTicket(@SessionAttribute(name = "userID", required = false) String userID, @PathVariable Long restaurantID) {
         System.out.println("RestaurantController.save");
-        System.out.println("memberID = " + memberID);
+        System.out.println("userID = " + userID);
 
         Optional<Restaurant> restaurantEntity = restaurantRepository.findById(restaurantID);
         Restaurant restaurant = restaurantEntity.get();
         System.out.println(restaurant);
 
-        Optional<Member> memberEntity = memberRepository.findByEmail(memberID);
-        Member member = memberEntity.get();
-        System.out.println(member);
+        Optional<User> userEntity = userRepository.findByEmail(userID);
+        User user = userEntity.get();
+        System.out.println(user);
 
-        ticketService.save(restaurant, member);
+        ticketService.save(restaurant, user);
 
         return "redirect:/";
     }

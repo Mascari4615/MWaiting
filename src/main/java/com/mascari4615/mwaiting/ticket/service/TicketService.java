@@ -1,13 +1,13 @@
 package com.mascari4615.mwaiting.ticket.service;
 
-import com.mascari4615.mwaiting.member.repository.entity.Member;
+import com.mascari4615.mwaiting.user.repository.entity.User;
 import com.mascari4615.mwaiting.restaurant.repository.entity.Restaurant;
 import com.mascari4615.mwaiting.ticket.controller.DTO.TicketDTO;
 
 import java.util.List;
 
 public interface TicketService {
-    void save(Restaurant restaurant, Member member);
+    void save(Restaurant restaurant, User user);
 
     List<TicketDTO> findAll();
 

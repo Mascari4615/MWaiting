@@ -5,8 +5,8 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
-import com.mascari4615.mwaiting.member.repository.MemberRepository;
-import com.mascari4615.mwaiting.member.repository.entity.Member;
+import com.mascari4615.mwaiting.user.repository.UserRepository;
+import com.mascari4615.mwaiting.user.repository.entity.User;
 import com.mascari4615.mwaiting.restaurant.controller.dto.RestaurantDTO;
 import com.mascari4615.mwaiting.restaurant.controller.dto.RestaurantRegisterRequest;
 import com.mascari4615.mwaiting.restaurant.service.RestaurantService;
@@ -30,7 +30,7 @@ import java.util.Optional;
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
-    private final MemberRepository memberRepository;
+    private final UserRepository userRepository;
 
     // 회원가입 페이지 출력 요청
     @GetMapping("/restaurant/register")
@@ -39,15 +39,15 @@ public class RestaurantController {
     }
 
     @PostMapping("/restaurant/register")
-    public String registerRestaurant(@SessionAttribute(name = "memberID", required = false) String memberID, @ModelAttribute RestaurantRegisterRequest restaurantRegisterRequest) {
+    public String registerRestaurant(@SessionAttribute(name = "userID", required = false) String userID, @ModelAttribute RestaurantRegisterRequest restaurantRegisterRequest) {
         System.out.println("RestaurantController.save");
         System.out.println("RestaurantRegisterRequest = " + restaurantRegisterRequest);
-        System.out.println("memberID = " + memberID);
+        System.out.println("userID = " + userID);
 
-        Optional<Member> memberEntity = memberRepository.findByEmail(memberID);
-        Member member = memberEntity.get();
-        System.out.println("memberEntity = " + member);
-        restaurantService.save(restaurantRegisterRequest, member);
+        Optional<User> userEntity = userRepository.findByEmail(userID);
+        User user = userEntity.get();
+        System.out.println("userEntity = " + user);
+        restaurantService.save(restaurantRegisterRequest, user);
 
         return "index";
     }
@@ -70,7 +70,7 @@ public class RestaurantController {
 
     //HACK
     @GetMapping("/restaurant/qr/{id}")
-    public ResponseEntity<byte[]> getMemberQR(@PathVariable Long id) throws WriterException, IOException {
+    public ResponseEntity<byte[]> getUserQR(@PathVariable Long id) throws WriterException, IOException {
         // QR 정보
         int width = 200;
         int height = 200;

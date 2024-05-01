@@ -1,21 +1,21 @@
-package com.mascari4615.mwaiting.member.repository.entity;
+package com.mascari4615.mwaiting.user.repository.entity;
 
-import com.mascari4615.mwaiting.member.controller.dto.MemberDTO;
+import com.mascari4615.mwaiting.user.controller.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Setter
 @Getter
-@Table(name = "member_table")
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class Member {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AutoIncrement
-    @Column(name = "MEMBER_ID")
+    @Column(name = "USER_ID")
     private Long id;
 
     @Column(unique = true) // unique 제약 조건 추가
@@ -27,11 +27,11 @@ public class Member {
     @Column
     private String name;
 
-    public static Member toMemberEntity(MemberDTO memberDTO) {
-        Member member = new Member();
-        member.setEmail(memberDTO.getEmail());
-        member.setPassword(memberDTO.getPassword());
-        member.setName(memberDTO.getName());
-        return member;
+    public static User toUser(UserDTO userDTO) {
+        User user = new User();
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        user.setName(userDTO.getName());
+        return user;
     }
 }

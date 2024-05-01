@@ -1,8 +1,8 @@
-package com.mascari4615.mwaiting.member.controller;
+package com.mascari4615.mwaiting.user.controller;
 
-import com.mascari4615.mwaiting.member.controller.dto.JoinRequest;
-import com.mascari4615.mwaiting.member.controller.dto.MemberDTO;
-import com.mascari4615.mwaiting.member.service.MemberService;
+import com.mascari4615.mwaiting.user.controller.dto.JoinRequest;
+import com.mascari4615.mwaiting.user.controller.dto.UserDTO;
+import com.mascari4615.mwaiting.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-public class MemberController {
+public class UserController {
     // RestAPI
     // Representational State Transfer
     // HTTP Method : CRUD를 통해 표현한다
@@ -28,7 +28,7 @@ public class MemberController {
     // @DeleteMapping
 
     // 원래는 직접 만들어주고 해야하는데, 생성자 주입을 받는다
-    private final MemberService memberService;
+    private final UserService userService;
 
     // Notation
     // @RequestMapping("/hello") -> Method를 지정하지 않으면 모든 Method에 대해 응답
@@ -44,8 +44,8 @@ public class MemberController {
         String name = joinRequest.getName();
         String phoneNumber = joinRequest.getPhoneNumber();
 
-        // String result = memberService.join(id, name, phoneNumber);
-        String result = memberService.join(joinRequest);
+        // String result = userService.join(id, name, phoneNumber);
+        String result = userService.join(joinRequest);
 
         // if (result.equalsIgnoreCase("success"))
         if ("success".equalsIgnoreCase(result)) // Null Exception 방지
@@ -63,67 +63,67 @@ public class MemberController {
     }
 
     // 회원가입 페이지 출력 요청
-    @GetMapping("/member/register")
+    @GetMapping("/user/register")
     public String registerForm() {
-        return "member-register";
+        return "user-register";
     }
 
-    @PostMapping("/member/register")
-    public String registerMember(@ModelAttribute MemberDTO memberDTO) {
-        System.out.println("MemberController.save");
-        System.out.println("memberDTO = " + memberDTO);
+    @PostMapping("/user/register")
+    public String registerUser(@ModelAttribute UserDTO userDTO) {
+        System.out.println("UserController.save");
+        System.out.println("userDTO = " + userDTO);
 
-        memberService.save(memberDTO);
+        userService.save(userDTO);
 
         return "index";
     }
 
-//    @PostMapping("/member/save")
-//    public String saveMember(
-//            @RequestParam("memberEmail") String memberEmail,
-//            @RequestParam("memberPassword") String memberPassword,
-//            @RequestParam("memberName") String memberName)
+//    @PostMapping("/user/save")
+//    public String saveUser(
+//            @RequestParam("userEmail") String userEmail,
+//            @RequestParam("userPassword") String userPassword,
+//            @RequestParam("userName") String userName)
 //    {
-//        System.out.println("MemberController.save");
-//        System.out.println("memberEmail = " + memberEmail + ", memberPassword = " + memberPassword + ", memberName = " + memberName);
+//        System.out.println("UserController.save");
+//        System.out.println("userEmail = " + userEmail + ", userPassword = " + userPassword + ", userName = " + userName);
 //        return "index";
 //    }
 
-    @GetMapping("/member/login")
+    @GetMapping("/user/login")
     public String login() {
         return "login";
     }
 
-    @PostMapping("/member/login")
-    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
-        System.out.println("MemberController.login");
-        System.out.println("memberDTO = " + memberDTO);
-        MemberDTO loginResult = memberService.login(memberDTO);
+    @PostMapping("/user/login")
+    public String login(@ModelAttribute UserDTO userDTO, HttpSession session) {
+        System.out.println("UserController.login");
+        System.out.println("userDTO = " + userDTO);
+        UserDTO loginResult = userService.login(userDTO);
 
         if (loginResult != null) {
             // 세션 : 정보 유지 (로그인 정보 유지)
-            session.setAttribute("memberID", loginResult.getEmail());
-            System.out.println("memberID = " + loginResult.getEmail());
-            System.out.println("memberDTO = " + memberDTO);
+            session.setAttribute("userID", loginResult.getEmail());
+            System.out.println("userID = " + loginResult.getEmail());
+            System.out.println("userDTO = " + userDTO);
             return "hello";
         } else {
             return "login";
         }
     }
 
-    @GetMapping("/member/list")
+    @GetMapping("/user/list")
     public String findAll(Model model) // 스프링에서 제공하는 객체 표현
     {
-        List<MemberDTO> memberDTOList = memberService.findAll();
+        List<UserDTO> userDTOList = userService.findAll();
         // 어떠한 html로 가져갈 데이터가 있다면 model 사용
-        model.addAttribute("memberList", memberDTOList);
-        return "member-list";
+        model.addAttribute("userList", userDTOList);
+        return "user-list";
     }
 
-    @GetMapping("/member/{id}")
+    @GetMapping("/user/{id}")
     public String findById(@PathVariable Long id, Model model) {
-        MemberDTO memberDTO = memberService.findById(id);
-        model.addAttribute("member", memberDTO);
-        return "member-detail";
+        UserDTO userDTO = userService.findById(id);
+        model.addAttribute("user", userDTO);
+        return "user-detail";
     }
 }

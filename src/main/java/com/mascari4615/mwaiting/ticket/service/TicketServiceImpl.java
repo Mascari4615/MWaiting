@@ -1,6 +1,6 @@
 package com.mascari4615.mwaiting.ticket.service;
 
-import com.mascari4615.mwaiting.member.repository.entity.Member;
+import com.mascari4615.mwaiting.user.repository.entity.User;
 import com.mascari4615.mwaiting.restaurant.repository.entity.Restaurant;
 import com.mascari4615.mwaiting.ticket.controller.DTO.TicketDTO;
 import com.mascari4615.mwaiting.ticket.repository.TicketRepository;
@@ -17,9 +17,9 @@ public class TicketServiceImpl implements TicketService {
     private final TicketRepository ticketRepository;
 
     @Override
-    public void save(Restaurant restaurant, Member member) {
+    public void save(Restaurant restaurant, User user) {
         Ticket ticket = Ticket.builder()
-                .member(member)
+                .user(user)
                 .restaurant(restaurant)
                 .ticketNumber(100L)
                 .build();

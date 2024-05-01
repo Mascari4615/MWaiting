@@ -1,6 +1,6 @@
 package com.mascari4615.mwaiting.restaurant.controller.dto;
 
-import com.mascari4615.mwaiting.member.repository.entity.Member;
+import com.mascari4615.mwaiting.user.repository.entity.User;
 import com.mascari4615.mwaiting.restaurant.repository.entity.Restaurant;
 import lombok.*;
 
@@ -11,7 +11,7 @@ import lombok.*;
 @ToString
 public class RestaurantDTO {
     private Long id;
-    private Member member;
+    private User user;
     private String name;
     private String phoneNumber;
     private String address;
@@ -21,7 +21,7 @@ public class RestaurantDTO {
     public static RestaurantDTO toRestaurantDTO(Restaurant restaurant) {
         RestaurantDTO restaurantDTO = new RestaurantDTO();
         restaurantDTO.setId(restaurant.getId());
-        restaurantDTO.setMember(restaurant.getMember());
+        restaurantDTO.setUser(restaurant.getUser());
         restaurantDTO.setName(restaurant.getName());
         restaurantDTO.setPhoneNumber(restaurant.getPhoneNumber());
         restaurantDTO.setAddress(restaurant.getAddress());

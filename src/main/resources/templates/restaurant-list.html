@@ -23,7 +23,7 @@
 <table>
     <tr>
         <th>id</th>
-        <th>member.memberEmail</th>
+        <th>user.memberEmail</th>
         <th>restaurantName</th>
         <th>restaurantPhoneNumber</th>
         <th>restaurantAddress</th>
@@ -35,7 +35,7 @@
     </tr>
     <tr th:each="restaurant: ${restaurantList}">
         <td th:text="${restaurant.id}"></td>
-        <td th:text="${restaurant.member.getEmail}"></td>
+        <td th:text="${restaurant.user.getEmail}"></td>
         <td th:text="${restaurant.getName}"></td>
         <td th:text="${restaurant.getPhoneNumber}"></td>
         <td th:text="${restaurant.getAddress}"></td>

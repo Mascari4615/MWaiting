@@ -1,27 +1,27 @@
-package com.mascari4615.mwaiting.member.repository;
+package com.mascari4615.mwaiting.user.repository;
 
-import com.mascari4615.mwaiting.member.repository.entity.Member;
+import com.mascari4615.mwaiting.user.repository.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class MemberRepositoryTest {
+public class UserRepositoryTest {
     @Autowired
-    MemberRepository memberRepository;
+    UserRepository userRepository;
 
     @Test
     public void crudTest() {
-        Member member = Member.builder()
+        User user = User.builder()
                 .id(0L)
                 .memberEmail("test@gmail.com")
                 .memberName("test")
                 .build();
 
         // create test
-        memberRepository.save(member);
+        userRepository.save(user);
 
         //get test
-        Member foundMember = memberRepository.findById(1L).get();
+        User foundUser = userRepository.findById(1L).get();
     }
 }

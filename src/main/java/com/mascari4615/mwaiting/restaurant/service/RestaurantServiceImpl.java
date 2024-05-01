@@ -1,6 +1,6 @@
 package com.mascari4615.mwaiting.restaurant.service;
 
-import com.mascari4615.mwaiting.member.repository.entity.Member;
+import com.mascari4615.mwaiting.user.repository.entity.User;
 import com.mascari4615.mwaiting.restaurant.controller.dto.RestaurantDTO;
 import com.mascari4615.mwaiting.restaurant.controller.dto.RestaurantRegisterRequest;
 import com.mascari4615.mwaiting.restaurant.repository.RestaurantRepository;
@@ -19,15 +19,15 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
 
     @Override
-    public String registerRestaurant(RestaurantRegisterRequest restaurantRegisterRequest, String memberName) {
+    public String registerRestaurant(RestaurantRegisterRequest restaurantRegisterRequest, String userName) {
         return "";
     }
 
     @Override
-    public void save(RestaurantRegisterRequest restaurantRegisterRequest, Member member) {
+    public void save(RestaurantRegisterRequest restaurantRegisterRequest, User user) {
         Restaurant restaurant = Restaurant.builder()
                 .id(restaurantRegisterRequest.getId())
-                .member(member)
+                .user(user)
                 .name(restaurantRegisterRequest.getName())
                 .phoneNumber(restaurantRegisterRequest.getPhoneNumber())
                 .address(restaurantRegisterRequest.getAddress())
@@ -49,14 +49,14 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     public RestaurantDTO findById(Long id) {
-        Optional<Restaurant> optionalRestaurantEntity = restaurantRepository.findById(id);
+        Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(id);
         // return restaurantEntity.map(RestaurantDTO::toRestaurantDTO).orElse(null);
 
-        if (optionalRestaurantEntity.isPresent()) {
-//            RestaurantEntity restaurantEntity = optionalRestaurantEntity.get();
-//            RestaurantDTO restaurantDTO = RestaurantDTO.toRestaurantDTO(restaurantEntity);
+        if (optionalRestaurant.isPresent()) {
+//            RestaurantEntity restaurant = optionalRestaurant.get();
+//            RestaurantDTO restaurantDTO = RestaurantDTO.toRestaurantDTO(restaurant);
 //            return restaurantDTO;
-            return RestaurantDTO.toRestaurantDTO(optionalRestaurantEntity.get());
+            return RestaurantDTO.toRestaurantDTO(optionalRestaurant.get());
         } else {
             return null;
         }

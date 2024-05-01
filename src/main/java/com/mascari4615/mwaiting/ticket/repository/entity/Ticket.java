@@ -1,6 +1,6 @@
 package com.mascari4615.mwaiting.ticket.repository.entity;
 
-import com.mascari4615.mwaiting.member.repository.entity.Member;
+import com.mascari4615.mwaiting.user.repository.entity.User;
 import com.mascari4615.mwaiting.restaurant.repository.entity.Restaurant;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,8 +23,8 @@ public class Ticket {
     private Restaurant restaurant;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
     @Column
     private Long ticketNumber;
