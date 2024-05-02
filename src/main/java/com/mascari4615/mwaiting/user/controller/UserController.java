@@ -1,6 +1,7 @@
 package com.mascari4615.mwaiting.user.controller;
 
 import com.mascari4615.mwaiting.ticket.controller.DTO.TicketDTO;
+import com.mascari4615.mwaiting.ticket.repository.entity.TicketState;
 import com.mascari4615.mwaiting.ticket.service.TicketService;
 import com.mascari4615.mwaiting.user.controller.dto.UserDTO;
 import com.mascari4615.mwaiting.user.controller.dto.UserRegisterDTO;
@@ -74,7 +75,8 @@ public class UserController {
 
             for (TicketDTO ticketDTO : ticketDTOS) {
                 if (Objects.equals(userDTO.getId(), ticketDTO.getUser().getId())) {
-                    model.addAttribute("ticket", ticketDTO);
+                    if (ticketDTO.getState() == TicketState.WAITING)
+                        model.addAttribute("ticket", ticketDTO);
                 }
             }
         }

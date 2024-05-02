@@ -28,4 +28,8 @@ public class TicketDTO {
         ticketDTO.setState(ticket.getState());
         return ticketDTO;
     }
+
+    public boolean isStateWaiting() {
+        return state == TicketState.WAITING;
+    }
 }

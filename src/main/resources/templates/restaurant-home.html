@@ -34,7 +34,8 @@
         <td th:text="${ticket.number}"></td>
         <td th:text="${ticket.state}"></td>
         <td>
-            처리
+            <a th:if="${ticket.isStateWaiting()}">호출</a>
+            <a th:if="${ticket.isStateWaiting()}" th:href="@{|/ticket/${ticket.id}/reject|}">취소</a>
         </td>
     </tr>
 </table>

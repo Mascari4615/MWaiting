@@ -1,5 +1,7 @@
 package com.mascari4615.mwaiting.ticket.controller;
 
+import com.mascari4615.mwaiting.ticket.controller.DTO.TicketDTO;
+import com.mascari4615.mwaiting.ticket.repository.entity.TicketState;
 import com.mascari4615.mwaiting.user.repository.UserRepository;
 import com.mascari4615.mwaiting.user.repository.entity.User;
 import com.mascari4615.mwaiting.restaurant.repository.RestaurantRepository;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -41,5 +44,12 @@ public class TicketController {
         ticketService.save(restaurant, user);
 
         return "redirect:/";
+    }
+
+    @GetMapping("/ticket/{ticketId}/reject")
+    public String rejectTicket(@PathVariable Long ticketId) {
+        TicketDTO ticketDTO = ticketService.findById(ticketId);
+        ticketService.setState(ticketId, TicketState.REJECTED);
+        return "redirect:/restaurant-home/" + ticketDTO.getRestaurant().getId();
     }
 }

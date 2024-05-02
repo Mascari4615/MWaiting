@@ -15,12 +15,12 @@
     <a href="/restaurant/list">restaurant-list</a><br>
     <br>
 
-    <th:block th:unless = "${#strings.isEmpty(ticket)}">
+    <th:block th:if = "${#strings.isEmpty(ticket) == false && ticket.isStateWaiting()}">
         Ticket<br>
-        Ticket.id = <a th:text="${ticket.id}"></a><br>
-        Ticket.restaurant = <a th:text="${ticket.restaurant}"></a><br>
-        Ticket.ticketNumber = <a th:text="${ticket.getNumber}"></a><br>
-        Ticket.user = <a th:text="${ticket.user}"></a><br>
+        id = <a th:text="${ticket.id}"></a><br>
+        restaurant = <a th:text="${ticket.restaurant.name}"></a><br>
+        number = <a th:text="${ticket.number}"></a><br>
+        user = <a th:text="${ticket.user.email}"></a><br>
     </th:block>
 </div>
 </body>

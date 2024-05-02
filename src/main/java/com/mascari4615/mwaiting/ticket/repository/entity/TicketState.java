@@ -4,8 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum TicketState {
-    CANCELED("CANCELED"),
     WAITING("WAITING"),
+    CANCELED("CANCELED"),
+    REJECTED("REJECTED"),
     PROCESSING("PROCESSING"),
     COMPLETED("COMPLETED");
 

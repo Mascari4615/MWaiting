@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +43,23 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public TicketDTO findById(Long id) {
+    public TicketDTO findById(Long id)
+    {
+        Optional<Ticket> ticketData = ticketRepository.findById(id);
+        if (ticketData.isPresent()) {
+            return TicketDTO.toTicketDTO(ticketData.get());
+        }
         return null;
+    }
+
+    @Override
+    public void setState(Long id, TicketState state) {
+        System.out.println(state);
+        Optional<Ticket> ticketData = ticketRepository.findById(id);
+        if (ticketData.isPresent()) {
+            Ticket ticket = ticketData.get();
+            ticket.setState(state);
+            ticketRepository.save(ticket);
+        }
     }
 }
