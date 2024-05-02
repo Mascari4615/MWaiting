@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>UserLogin</title>
-</head>
+<head th:replace="~{fragments.html :: head}"></head>
 <body>
-<form action="/user/login" method="post">
-    <!-- userName이 아니라 username임 -->
-    Email: <input type="text" name="username"><br>
-    Password: <input type="text" name="password"><br>
-    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-    <input type="submit" value="로그인">
-</form>
-
-<a href="/user/register">UserRegister</a>
+<nav th:replace="~{fragments.html :: navigation-bar}"></nav>
+<div class="container">
+    <h2>UserLogin</h2>
+    <form action="/user/login" method="post">
+        <!-- userName이 아니라 username임 -->
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+        </div>
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+        <input type="submit" class="btn btn-primary" value="로그인">
+    </form>
+    <a href="/user/register">UserRegister</a>
+</div>
 </body>
 </html>

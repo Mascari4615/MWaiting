@@ -1,44 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>restaurant detail</title>
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-
-        th, td {
-            text-align: center;
-            border: 1px solid #000;
-            vertical-align: top; /* 위 */
-            vertical-align: bottom; /* 아래 */
-            vertical-align: middle; /* 가운데 */
-        }
-    </style>
-</head>
+<head th:replace="~{fragments.html :: head}"></head>
 <body>
-<a th:text="${restaurant.getName}"></a> 식당 관리
-
-<table>
-    <tr>
-        <th>id</th>
-        <th>user</th>
-        <th>num</th>
-        <th>state</th>
-        <th>처리</th>
-    </tr>
-    <tr th:each="ticket: ${tickets}">
-        <td th:text="${ticket.id}"></td>
-        <td th:text="${ticket.user.email}"></td>
-        <td th:text="${ticket.number}"></td>
-        <td th:text="${ticket.state}"></td>
-        <td>
-            <a th:if="${ticket.isStateWaiting()}">호출</a>
-            <a th:if="${ticket.isStateWaiting()}" th:href="@{|/ticket/${ticket.id}/reject|}">취소</a>
-        </td>
-    </tr>
-</table>
+<nav th:replace="~{fragments.html :: navigation-bar}"></nav>
+<div class="container">
+    <h2 th:text="${restaurant.getName}+'식당 관리'"></h2>
+    <table class="table table-striped">
+        <tr>
+            <th>id</th>
+            <th>user</th>
+            <th>num</th>
+            <th>state</th>
+            <th>처리</th>
+        </tr>
+        <tr th:each="ticket: ${tickets}">
+            <td th:text="${ticket.id}"></td>
+            <td th:text="${ticket.user.email}"></td>
+            <td th:text="${ticket.number}"></td>
+            <td th:text="${ticket.state}"></td>
+            <td>
+                <a th:if="${ticket.isStateWaiting()}">호출</a>
+                <a th:if="${ticket.isStateWaiting()}" th:href="@{|/ticket/${ticket.id}/reject|}">취소</a>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>
 

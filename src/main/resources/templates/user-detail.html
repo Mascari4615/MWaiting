@@ -1,37 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <title>user detail</title>
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-
-        /*이중선 제거*/
-        th, td {
-            text-align: center;
-            border: 1px solid #000;
-            vertical-align: top; /* 위 */
-            vertical-align: bottom; /* 아래 */
-            vertical-align: middle; /* 가운데 */
-        }
-    </style>
-</head>
+<head th:replace="~{fragments.html :: head}"></head>
 <body>
-<table>
-    <tr>
-        <th>id</th>
-        <th>email</th>
-        <th>password</th>
-        <th>name</th>
-    </tr>
-    <tr>
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.userName}"></td>
-        <td th:text="${user.password}"></td>
-    </tr>
-</table>
+<nav th:replace="~{fragments.html :: navigation-bar}"></nav>
+<div class="container">
+    <h2>UserDetail</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>id</th>
+            <th>email</th>
+        </tr>
+        <tr>
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.email}"></td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

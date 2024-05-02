@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html lang="kr" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Index</title>
-</head>
+<head th:replace="~{fragments.html :: head}"></head>
 <body>
-<div>
-    Email : <a th:text="${email}"></a><br>
-    Role : <a th:text="${role}"></a><br>
-    <br>
+<nav th:replace="~{fragments.html :: navigation-bar}"></nav>
+<div class="container">
+    <h2>Index</h2>
+    <div>
+        Email : <a th:text="${email}"></a><br>
+        Role : <a th:text="${role}"></a><br>
+        <br>
 
-    <a href="/restaurant/register">restaurant-register</a><br>
-    <a href="/user/list">user-list</a><br>
-    <a href="/restaurant/list">restaurant-list</a><br>
-    <br>
+        <a href="/restaurant/register">restaurant-register</a><br>
+        <a href="/user/list">user-list</a><br>
+        <a href="/restaurant/list">restaurant-list</a><br>
+        <br>
 
-    <th:block th:if = "${#strings.isEmpty(ticket) == false && ticket.isStateWaiting()}">
-        Ticket<br>
-        id = <a th:text="${ticket.id}"></a><br>
-        restaurant = <a th:text="${ticket.restaurant.name}"></a><br>
-        number = <a th:text="${ticket.number}"></a><br>
-        user = <a th:text="${ticket.user.email}"></a><br>
-    </th:block>
+        <th:block th:if="${#strings.isEmpty(ticket) == false && ticket.isStateWaiting()}">
+            Ticket<br>
+            id = <a th:text="${ticket.id}"></a><br>
+            restaurant = <a th:text="${ticket.restaurant.name}"></a><br>
+            number = <a th:text="${ticket.number}"></a><br>
+            user = <a th:text="${ticket.user.email}"></a><br>
+        </th:block>
+    </div>
 </div>
 </body>
 </html>

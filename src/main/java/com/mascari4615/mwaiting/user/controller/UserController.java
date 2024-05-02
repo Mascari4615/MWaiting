@@ -43,10 +43,10 @@ public class UserController {
     // Notation
     // @RequestMapping("/hello") -> Method를 지정하지 않으면 모든 Method에 대해 응답
     // @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    @GetMapping("/hello")
-    public String getHello() {
-        return "hello";
-    }
+//    @GetMapping("/hello")
+//    public String getHello() {
+//        return "hello";
+//    }
 
     @GetMapping("/")
     public String index(Model model) {

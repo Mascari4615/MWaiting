@@ -18,7 +18,8 @@ public class SecurityConfig {
         // 위에서부터 순서대로
 
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/user/register", "/user/login", "/loginProc").permitAll()
+                .requestMatchers("/css/**", "/error").permitAll()
+                .requestMatchers("/user/register", "/user/login").permitAll()
                 .requestMatchers("/admin").hasRole("ADMIN")
                 .requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()); // 나머지 경로에 대한 처리
