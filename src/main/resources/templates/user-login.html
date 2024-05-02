@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>UserLogin</title>
+</head>
+<body>
+<form action="/user/login" method="post">
+    <!-- userName이 아니라 username임 -->
+    Email: <input type="text" name="username"><br>
+    Password: <input type="text" name="password"><br>
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+    <input type="submit" value="로그인">
+</form>
+</body>
+</html>

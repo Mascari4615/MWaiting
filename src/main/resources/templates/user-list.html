@@ -31,9 +31,8 @@
     </tr>
     <tr th:each="user: ${userList}">
         <td th:text="${user.id}"></td>
-        <td th:text="${user.getEmail}"></td>
-        <td th:text="${user.getPassword}"></td>
-        <td th:text="${user.getName}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.password}"></td>
         <td>
             <!-- query string /user?id=1
                 rest api /user/1

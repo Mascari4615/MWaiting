@@ -24,15 +24,15 @@ public class TicketController {
     private final TicketService ticketService;
 
     @PostMapping("/ticket/{restaurantID}")
-    public String createTicket(@SessionAttribute(name = "userID", required = false) String userID, @PathVariable Long restaurantID) {
+    public String createTicket(@SessionAttribute(name = "userEmail", required = false) String userEmail, @PathVariable Long restaurantID) {
         System.out.println("RestaurantController.save");
-        System.out.println("userID = " + userID);
+        System.out.println("userEmail = " + userEmail);
 
         Optional<Restaurant> restaurantEntity = restaurantRepository.findById(restaurantID);
         Restaurant restaurant = restaurantEntity.get();
         System.out.println(restaurant);
 
-        Optional<User> userEntity = userRepository.findByEmail(userID);
+        Optional<User> userEntity = userRepository.findByEmail(userEmail);
         User user = userEntity.get();
         System.out.println(user);
 

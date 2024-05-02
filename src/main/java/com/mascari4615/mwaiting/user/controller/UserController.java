@@ -1,15 +1,20 @@
 package com.mascari4615.mwaiting.user.controller;
 
-import com.mascari4615.mwaiting.user.controller.dto.JoinRequest;
 import com.mascari4615.mwaiting.user.controller.dto.UserDTO;
+import com.mascari4615.mwaiting.user.controller.dto.UserRegisterDTO;
 import com.mascari4615.mwaiting.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 // @RestController
@@ -38,28 +43,26 @@ public class UserController {
         return "hello";
     }
 
-    @PostMapping("/join")
-    public String join(@RequestBody JoinRequest joinRequest) {
-        String id = joinRequest.getId();
-        String name = joinRequest.getName();
-        String phoneNumber = joinRequest.getPhoneNumber();
+    @GetMapping("/")
+    public String index(Model model) {
 
-        // String result = userService.join(id, name, phoneNumber);
-        String result = userService.join(joinRequest);
+        // 사용자가 로그인을 진행한 뒤 사용자 정보는 SecurityContextHolder에 의해서 서버 세션에 관리된다.
+        String id = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        // if (result.equalsIgnoreCase("success"))
-        if ("success".equalsIgnoreCase(result)) // Null Exception 방지
-        {
-            return "success";
-        } else {
-            return "fail";
-        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        // Talend API Tester
-        // @valid, @validated
-        // exceptionhandler, controlleradive
-        // restTemplate, webClient
-        // 탈퇴, 휴먼
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+        GrantedAuthority auth = iter.next();
+        String role = auth.getAuthority();
+
+        model.addAttribute("id", id);
+        model.addAttribute("role", role);
+
+        System.out.println("id:" + id);
+        System.out.println("role: " + role);
+
+        return "index";
     }
 
     // 회원가입 페이지 출력 요청
@@ -69,13 +72,26 @@ public class UserController {
     }
 
     @PostMapping("/user/register")
-    public String registerUser(@ModelAttribute UserDTO userDTO) {
-        System.out.println("UserController.save");
-        System.out.println("userDTO = " + userDTO);
+    // public String join(@RequestBody JoinRequest joinRequest) {
+    public String registerUser(@ModelAttribute UserRegisterDTO userRegisterDTO) {
+        System.out.println("UserController.registerUser");
+        System.out.println("UserRegisterDTO = " + userRegisterDTO);
 
-        userService.save(userDTO);
+        String result = userService.register(userRegisterDTO);
 
-        return "index";
+        // if (result.equalsIgnoreCase("success"))
+        if ("success".equalsIgnoreCase(result)) // Null Exception 방지
+        {
+            return "redirect:/user/login";
+        } else {
+            return "fail";
+        }
+
+        // Talend API Tester
+        // @valid, @validated
+        // exceptionhandler, controlleradive
+        // restTemplate, webClient
+        // 탈퇴, 휴먼
     }
 
 //    @PostMapping("/user/save")
@@ -91,25 +107,25 @@ public class UserController {
 
     @GetMapping("/user/login")
     public String login() {
-        return "login";
+        return "user-login";
     }
 
-    @PostMapping("/user/login")
-    public String login(@ModelAttribute UserDTO userDTO, HttpSession session) {
-        System.out.println("UserController.login");
-        System.out.println("userDTO = " + userDTO);
-        UserDTO loginResult = userService.login(userDTO);
-
-        if (loginResult != null) {
-            // 세션 : 정보 유지 (로그인 정보 유지)
-            session.setAttribute("userID", loginResult.getEmail());
-            System.out.println("userID = " + loginResult.getEmail());
-            System.out.println("userDTO = " + userDTO);
-            return "hello";
-        } else {
-            return "login";
-        }
-    }
+//    @PostMapping("/user/login")
+//    public String login(@ModelAttribute UserDTO userDTO, HttpSession session) {
+//        System.out.println("UserController.login");
+//        System.out.println("userDTO = " + userDTO);
+//        UserDTO loginResult = userService.login(userDTO);
+//
+//        if (loginResult != null) {
+//            // 세션 : 정보 유지 (로그인 정보 유지)
+//            session.setAttribute("userName", loginResult.getUserName());
+//            System.out.println("userName = " + loginResult.getUserName());
+//            System.out.println("userDTO = " + userDTO);
+//            return "hello";
+//        } else {
+//            return "user-login";
+//        }
+//    }
 
     @GetMapping("/user/list")
     public String findAll(Model model) // 스프링에서 제공하는 객체 표현

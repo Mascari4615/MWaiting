@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="kr">
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Temp</title>
+    <title></title>
 </head>
 <body>
 <div>
     Hello World !
+    <a th:text="${id}"></a>
+    <a th:text="${role}"></a>
     <a href="/user/register">user-register</a>
     <a href="/user/login">user-login</a>
     <a href="/restaurant/register">restaurant-register</a>

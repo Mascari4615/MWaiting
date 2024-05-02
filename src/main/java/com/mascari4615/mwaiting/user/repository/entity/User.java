@@ -25,13 +25,13 @@ public class User {
     private String password;
 
     @Column
-    private String name;
+    private String role;
 
     public static User toUser(UserDTO userDTO) {
         User user = new User();
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
-        user.setName(userDTO.getName());
+        user.setRole(userDTO.getRole());
         return user;
     }
 }

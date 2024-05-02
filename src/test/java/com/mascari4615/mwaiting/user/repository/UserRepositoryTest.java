@@ -14,8 +14,8 @@ public class UserRepositoryTest {
     public void crudTest() {
         User user = User.builder()
                 .id(0L)
-                .memberEmail("test@gmail.com")
-                .memberName("test")
+                .email("test@gmail.com")
+                .password("test")
                 .build();
 
         // create test

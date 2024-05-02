@@ -39,12 +39,12 @@ public class RestaurantController {
     }
 
     @PostMapping("/restaurant/register")
-    public String registerRestaurant(@SessionAttribute(name = "userID", required = false) String userID, @ModelAttribute RestaurantRegisterRequest restaurantRegisterRequest) {
+    public String registerRestaurant(@SessionAttribute(name = "userName", required = false) String userName, @ModelAttribute RestaurantRegisterRequest restaurantRegisterRequest) {
         System.out.println("RestaurantController.save");
         System.out.println("RestaurantRegisterRequest = " + restaurantRegisterRequest);
-        System.out.println("userID = " + userID);
+        System.out.println("userName = " + userName);
 
-        Optional<User> userEntity = userRepository.findByEmail(userID);
+        Optional<User> userEntity = userRepository.findByEmail(userName);
         User user = userEntity.get();
         System.out.println("userEntity = " + user);
         restaurantService.save(restaurantRegisterRequest, user);
