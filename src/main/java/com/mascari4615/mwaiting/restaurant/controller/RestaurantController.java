@@ -5,6 +5,9 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
+import com.mascari4615.mwaiting.ticket.controller.DTO.TicketDTO;
+import com.mascari4615.mwaiting.ticket.service.TicketService;
+import com.mascari4615.mwaiting.ticket.service.TicketServiceImpl;
 import com.mascari4615.mwaiting.user.repository.UserRepository;
 import com.mascari4615.mwaiting.user.repository.entity.User;
 import com.mascari4615.mwaiting.restaurant.controller.dto.RestaurantDTO;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +36,7 @@ public class RestaurantController {
 
     private final RestaurantService restaurantService;
     private final UserRepository userRepository;
+    private final TicketService ticketService;
 
     // 회원가입 페이지 출력 요청
     @GetMapping("/restaurant/register")
@@ -104,7 +109,18 @@ public class RestaurantController {
     @GetMapping("/restaurant-home/{id}")
     public String restaurantHome(@PathVariable Long id, Model model) {
         RestaurantDTO restaurantDTO = restaurantService.findById(id);
+        List<TicketDTO> ticketDTOs = ticketService.findAll();
+
+        List<TicketDTO> targetTicketDTOs = new ArrayList<>();
+
+        for (TicketDTO ticketDTO : ticketDTOs) {
+            if (ticketDTO.getRestaurant().getId().equals(id)) {
+                targetTicketDTOs.add(ticketDTO);
+            }
+        }
+
         model.addAttribute("restaurant", restaurantDTO);
+        model.addAttribute("tickets", targetTicketDTOs);
         return "restaurant-home";
     }
 }
