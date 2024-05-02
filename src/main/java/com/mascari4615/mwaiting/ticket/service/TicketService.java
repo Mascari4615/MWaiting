@@ -8,7 +8,7 @@ import com.mascari4615.mwaiting.ticket.controller.DTO.TicketDTO;
 import java.util.List;
 
 public interface TicketService {
-    void save(Restaurant restaurant, User user);
+    void save(TicketDTO ticketDTO);
 
     List<TicketDTO> findAll();
 

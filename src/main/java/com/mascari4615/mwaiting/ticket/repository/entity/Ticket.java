@@ -30,6 +30,12 @@ public class Ticket {
     private Long number;
 
     @Column
+    private Long headCount;
+
+    @Column
+    private String description;
+
+    @Column
     @Enumerated(EnumType.STRING)
     private TicketState state;
 }

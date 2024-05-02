@@ -30,9 +30,7 @@
                 <a th:href="@{|/restaurant/${restaurant.id}|}">조회</a>
             </td>
             <td>
-                <form th:action="@{|/ticket/${restaurant.id}|}" method="post">
-                    <input type="submit" value="웨이팅">
-                </form>
+                <a th:href="@{|/ticket/${restaurant.id}|}">웨이팅</a>
             </td>
             <td>
                 <a th:href="@{|/restaurant/delete/${restaurant.id}|}">삭제</a>

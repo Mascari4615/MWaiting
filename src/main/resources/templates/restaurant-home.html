@@ -11,6 +11,8 @@
             <th>user</th>
             <th>num</th>
             <th>state</th>
+            <th>headCount</th>
+            <th>description</th>
             <th>처리</th>
         </tr>
         <tr th:each="ticket: ${tickets}">
@@ -18,6 +20,8 @@
             <td th:text="${ticket.user.email}"></td>
             <td th:text="${ticket.number}"></td>
             <td th:text="${ticket.state}"></td>
+            <td th:text="${ticket.headCount}"></td>
+            <td th:text="${ticket.description}"></td>
             <td>
                 <a th:if="${ticket.isStateWaiting()}">호출</a>
                 <a th:if="${ticket.isStateWaiting()}" th:href="@{|/ticket/${ticket.id}/reject|}">취소</a>

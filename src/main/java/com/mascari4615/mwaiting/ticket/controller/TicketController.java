@@ -1,5 +1,6 @@
 package com.mascari4615.mwaiting.ticket.controller;
 
+import com.mascari4615.mwaiting.ticket.controller.DTO.TicketCreateDTO;
 import com.mascari4615.mwaiting.ticket.controller.DTO.TicketDTO;
 import com.mascari4615.mwaiting.ticket.repository.entity.TicketState;
 import com.mascari4615.mwaiting.user.repository.UserRepository;
@@ -11,10 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -27,21 +26,39 @@ public class TicketController {
     private final UserRepository userRepository;
     private final TicketService ticketService;
 
-    @PostMapping("/ticket/{restaurantID}")
-    public String createTicket(@PathVariable Long restaurantID) {
-        System.out.println("RestaurantController.save");
-
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+    @GetMapping("/ticket/{restaurantID}")
+    public String createTicketForm(Model model, @PathVariable Long restaurantID) {
+        System.out.println("createTicketForm");
 
         Optional<Restaurant> restaurantEntity = restaurantRepository.findById(restaurantID);
         Restaurant restaurant = restaurantEntity.get();
         System.out.println(restaurant);
 
-        Optional<User> userEntity = userRepository.findByEmail(email);
-        User user = userEntity.get();
+        model.addAttribute("restaurant", restaurant);
+
+        return "ticket-create";
+    }
+
+    @PostMapping("/ticket/create")
+    public String createTicket(@ModelAttribute TicketCreateDTO ticketCreateDTO) {
+        System.out.println("createTicket");
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<User> userData = userRepository.findByEmail(email);
+        User user = userData.get();
         System.out.println(user);
 
-        ticketService.save(restaurant, user);
+        Optional<Restaurant> restaurantData = restaurantRepository.findById(ticketCreateDTO.getRestaurantId());
+        Restaurant restaurant = restaurantData.get();
+        System.out.println(restaurant);
+
+        TicketDTO ticketDTO = new TicketDTO();
+        ticketDTO.setRestaurant(restaurant);
+        ticketDTO.setUser(user);
+        ticketDTO.setDescription(ticketCreateDTO.getDescription());
+        ticketDTO.setHeadCount(ticketCreateDTO.getHeadCount());
+
+        ticketService.save(ticketDTO);
 
         return "redirect:/";
     }

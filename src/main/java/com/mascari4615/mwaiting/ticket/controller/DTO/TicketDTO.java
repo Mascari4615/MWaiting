@@ -16,6 +16,8 @@ public class TicketDTO {
     private Restaurant restaurant;
     private User user;
     private Long number;
+    private Long headCount;
+    private String description;
     private TicketState state;
 
     public static TicketDTO toTicketDTO(Ticket ticket)
@@ -25,6 +27,8 @@ public class TicketDTO {
         ticketDTO.setRestaurant(ticket.getRestaurant());
         ticketDTO.setUser(ticket.getUser());
         ticketDTO.setNumber(ticket.getNumber());
+        ticketDTO.setHeadCount(ticket.getHeadCount());
+        ticketDTO.setDescription(ticket.getDescription());
         ticketDTO.setState(ticket.getState());
         return ticketDTO;
     }
