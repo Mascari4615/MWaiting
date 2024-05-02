@@ -1,5 +1,6 @@
 package com.mascari4615.mwaiting.ticket.service;
 
+import com.mascari4615.mwaiting.ticket.repository.entity.TicketState;
 import com.mascari4615.mwaiting.user.controller.dto.UserDTO;
 import com.mascari4615.mwaiting.user.repository.entity.User;
 import com.mascari4615.mwaiting.restaurant.repository.entity.Restaurant;
@@ -23,7 +24,8 @@ public class TicketServiceImpl implements TicketService {
         Ticket ticket = Ticket.builder()
                 .user(user)
                 .restaurant(restaurant)
-                .ticketNumber(100L)
+                .number(100L)
+                .state(TicketState.WAITING)
                 .build();
 
         ticketRepository.save(ticket); // 이건 이름 save 메소드여야 함

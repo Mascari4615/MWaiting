@@ -27,5 +27,9 @@ public class Ticket {
     private User user;
 
     @Column
-    private Long ticketNumber;
+    private Long number;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private TicketState state;
 }

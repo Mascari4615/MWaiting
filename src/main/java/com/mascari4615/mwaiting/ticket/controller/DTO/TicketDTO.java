@@ -2,6 +2,7 @@ package com.mascari4615.mwaiting.ticket.controller.DTO;
 
 import com.mascari4615.mwaiting.restaurant.repository.entity.Restaurant;
 import com.mascari4615.mwaiting.ticket.repository.entity.Ticket;
+import com.mascari4615.mwaiting.ticket.repository.entity.TicketState;
 import com.mascari4615.mwaiting.user.repository.entity.User;
 import lombok.*;
 
@@ -14,7 +15,8 @@ public class TicketDTO {
     private Long id;
     private Restaurant restaurant;
     private User user;
-    private Long ticketNumber;
+    private Long number;
+    private TicketState state;
 
     public static TicketDTO toTicketDTO(Ticket ticket)
     {
@@ -22,7 +24,8 @@ public class TicketDTO {
         ticketDTO.setId(ticket.getId());
         ticketDTO.setRestaurant(ticket.getRestaurant());
         ticketDTO.setUser(ticket.getUser());
-        ticketDTO.setTicketNumber(ticket.getTicketNumber());
+        ticketDTO.setNumber(ticket.getNumber());
+        ticketDTO.setState(ticket.getState());
         return ticketDTO;
     }
 }
