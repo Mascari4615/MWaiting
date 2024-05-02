@@ -26,7 +26,6 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public void save(RestaurantRegisterRequest restaurantRegisterRequest, User user) {
         Restaurant restaurant = Restaurant.builder()
-                .id(restaurantRegisterRequest.getId())
                 .user(user)
                 .name(restaurantRegisterRequest.getName())
                 .phoneNumber(restaurantRegisterRequest.getPhoneNumber())

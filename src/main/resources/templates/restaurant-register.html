@@ -6,11 +6,12 @@
 </head>
 <body>
 <form action="/restaurant/register" method="post">
-    식당 이름: <input type="text" name="restaurantName" required><br>
-    식당 전화번호: <input type="text" name="restaurantPhoneNumber" required><br>
-    식당 주소: <input type="text" name="restaurantAddress" required><br>
-    식당 운영시간: <input type="text" name="restaurantTime" required><br>
-    식당 설명: <textarea name="restaurantDescription" rows="4" required></textarea><br>
+    식당 이름: <input type="text" name="name" required><br>
+    식당 전화번호: <input type="text" name="phoneNumber" required><br>
+    식당 주소: <input type="text" name="address" required><br>
+    식당 운영시간: <input type="text" name="time" required><br>
+    식당 설명: <textarea name="description" rows="4" required></textarea><br>
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
     <input type="submit" value="식당 가입">
 </form>
 </body>

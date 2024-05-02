@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,17 +40,20 @@ public class RestaurantController {
     }
 
     @PostMapping("/restaurant/register")
-    public String registerRestaurant(@SessionAttribute(name = "userName", required = false) String userName, @ModelAttribute RestaurantRegisterRequest restaurantRegisterRequest) {
+    //public String registerRestaurant(@SessionAttribute(name = "userName", required = false) String userName, @ModelAttribute RestaurantRegisterRequest restaurantRegisterRequest) {
+    public String registerRestaurant(@ModelAttribute RestaurantRegisterRequest restaurantRegisterRequest) {
         System.out.println("RestaurantController.save");
         System.out.println("RestaurantRegisterRequest = " + restaurantRegisterRequest);
-        System.out.println("userName = " + userName);
 
-        Optional<User> userEntity = userRepository.findByEmail(userName);
-        User user = userEntity.get();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        Optional<User> userData = userRepository.findByEmail(email);
+        User user = userData.get();
         System.out.println("userEntity = " + user);
+
         restaurantService.save(restaurantRegisterRequest, user);
 
-        return "index";
+        return "redirect:/";
     }
 
     @GetMapping("/restaurant/list")
