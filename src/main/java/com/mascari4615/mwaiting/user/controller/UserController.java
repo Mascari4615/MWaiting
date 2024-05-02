@@ -1,5 +1,7 @@
 package com.mascari4615.mwaiting.user.controller;
 
+import com.mascari4615.mwaiting.ticket.controller.DTO.TicketDTO;
+import com.mascari4615.mwaiting.ticket.service.TicketService;
 import com.mascari4615.mwaiting.user.controller.dto.UserDTO;
 import com.mascari4615.mwaiting.user.controller.dto.UserRegisterDTO;
 import com.mascari4615.mwaiting.user.service.UserService;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 // @RestController
 @Controller
@@ -34,6 +37,7 @@ public class UserController {
 
     // 원래는 직접 만들어주고 해야하는데, 생성자 주입을 받는다
     private final UserService userService;
+    private final TicketService ticketService;
 
     // Notation
     // @RequestMapping("/hello") -> Method를 지정하지 않으면 모든 Method에 대해 응답
@@ -47,7 +51,7 @@ public class UserController {
     public String index(Model model) {
 
         // 사용자가 로그인을 진행한 뒤 사용자 정보는 SecurityContextHolder에 의해서 서버 세션에 관리된다.
-        String id = SecurityContextHolder.getContext().getAuthentication().getName();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -56,11 +60,24 @@ public class UserController {
         GrantedAuthority auth = iter.next();
         String role = auth.getAuthority();
 
-        model.addAttribute("id", id);
+        model.addAttribute("email", email);
         model.addAttribute("role", role);
 
-        System.out.println("id:" + id);
+        System.out.println("email:" + email);
         System.out.println("role: " + role);
+
+        if (email != null)
+        {
+            UserDTO userDTO = userService.findByEmail(email);
+
+            List<TicketDTO> ticketDTOS = ticketService.findAll();
+
+            for (TicketDTO ticketDTO : ticketDTOS) {
+                if (Objects.equals(userDTO.getId(), ticketDTO.getUser().getId())) {
+                    model.addAttribute("ticket", ticketDTO);
+                }
+            }
+        }
 
         return "index";
     }

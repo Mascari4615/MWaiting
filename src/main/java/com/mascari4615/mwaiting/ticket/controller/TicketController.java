@@ -7,6 +7,7 @@ import com.mascari4615.mwaiting.restaurant.repository.entity.Restaurant;
 import com.mascari4615.mwaiting.ticket.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,15 +25,16 @@ public class TicketController {
     private final TicketService ticketService;
 
     @PostMapping("/ticket/{restaurantID}")
-    public String createTicket(@SessionAttribute(name = "userEmail", required = false) String userEmail, @PathVariable Long restaurantID) {
+    public String createTicket(@PathVariable Long restaurantID) {
         System.out.println("RestaurantController.save");
-        System.out.println("userEmail = " + userEmail);
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Optional<Restaurant> restaurantEntity = restaurantRepository.findById(restaurantID);
         Restaurant restaurant = restaurantEntity.get();
         System.out.println(restaurant);
 
-        Optional<User> userEntity = userRepository.findByEmail(userEmail);
+        Optional<User> userEntity = userRepository.findByEmail(email);
         User user = userEntity.get();
         System.out.println(user);
 

@@ -101,4 +101,14 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+
+    @Override
+    public UserDTO findByEmail(String email) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isPresent()) {
+            return UserDTO.toUserDTO(optionalUser.get());
+        } else {
+            return null;
+        }
+    }
 }

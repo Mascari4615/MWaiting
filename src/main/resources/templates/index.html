@@ -2,16 +2,26 @@
 <html lang="kr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Index</title>
 </head>
 <body>
 <div>
-    Hello World !
-    <a th:text="${id}"></a>
-    <a th:text="${role}"></a>
-    <a href="/restaurant/register">restaurant-register</a>
-    <a href="/user/list">user-list</a>
-    <a href="/restaurant/list">restaurant-list</a>
+    Email : <a th:text="${email}"></a><br>
+    Role : <a th:text="${role}"></a><br>
+    <br>
+
+    <a href="/restaurant/register">restaurant-register</a><br>
+    <a href="/user/list">user-list</a><br>
+    <a href="/restaurant/list">restaurant-list</a><br>
+    <br>
+
+    <th:block th:unless = "${#strings.isEmpty(ticket)}">
+        Ticket<br>
+        Ticket.id = <a th:text="${ticket.id}"></a><br>
+        Ticket.restaurant = <a th:text="${ticket.restaurant}"></a><br>
+        Ticket.ticketNumber = <a th:text="${ticket.ticketNumber}"></a><br>
+        Ticket.user = <a th:text="${ticket.user}"></a><br>
+    </th:block>
 </div>
 </body>
 </html>

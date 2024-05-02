@@ -1,5 +1,6 @@
 package com.mascari4615.mwaiting.ticket.service;
 
+import com.mascari4615.mwaiting.user.controller.dto.UserDTO;
 import com.mascari4615.mwaiting.user.repository.entity.User;
 import com.mascari4615.mwaiting.restaurant.repository.entity.Restaurant;
 import com.mascari4615.mwaiting.ticket.controller.DTO.TicketDTO;
@@ -8,6 +9,7 @@ import com.mascari4615.mwaiting.ticket.repository.entity.Ticket;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,7 +31,12 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<TicketDTO> findAll() {
-        return List.of();
+        List<Ticket> ticketList = ticketRepository.findAll();
+        List<TicketDTO> ticketDTOList = new ArrayList<>();
+        for (Ticket ticket : ticketList) {
+            ticketDTOList.add(TicketDTO.toTicketDTO(ticket));
+        }
+        return ticketDTOList;
     }
 
     @Override
