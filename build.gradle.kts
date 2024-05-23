@@ -51,6 +51,8 @@ dependencies {
     // QR, https://github.com/zxing/zxing
     implementation("com.google.zxing:core:3.5.3")
     implementation("com.google.zxing:javase:3.5.3")
+
+    compileOnly("org.mariadb.jdbc:mariadb-java-client")
 }
 
 tasks.withType<Test> {
@@ -60,4 +62,3 @@ tasks.withType<Test> {
 tasks.named<Jar>("jar") {
    enabled = false;
 }
-
