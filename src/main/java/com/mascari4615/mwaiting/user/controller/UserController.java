@@ -101,7 +101,7 @@ public class UserController {
         // if (result.equalsIgnoreCase("success"))
         if ("success".equalsIgnoreCase(result)) // Null Exception 방지
         {
-            return "redirect:/user/login";
+            return "redirect:user/login";
         } else {
             return "fail";
         }

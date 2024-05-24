@@ -58,7 +58,7 @@ public class RestaurantController {
 
         restaurantService.save(restaurantRegisterRequest, user);
 
-        return "redirect:/";
+        return "redirect:";
     }
 
     @GetMapping("/restaurant/list")
