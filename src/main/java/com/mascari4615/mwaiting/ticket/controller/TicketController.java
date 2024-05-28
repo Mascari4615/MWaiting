@@ -60,13 +60,13 @@ public class TicketController {
 
         ticketService.save(ticketDTO);
 
-        return "redirect:";
+        return "redirect:/";
     }
 
     @GetMapping("/ticket/{ticketId}/reject")
     public String rejectTicket(@PathVariable Long ticketId) {
         TicketDTO ticketDTO = ticketService.findById(ticketId);
         ticketService.setState(ticketId, TicketState.REJECTED);
-        return "redirect:restaurant-home/" + ticketDTO.getRestaurant().getId();
+        return "redirect:/restaurant-home/" + ticketDTO.getRestaurant().getId();
     }
 }
