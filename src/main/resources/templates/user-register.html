@@ -1,23 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
-<head th:replace="~{fragments.html :: head}"></head>
-<body>
-<nav th:replace="~{fragments.html :: navigation-bar}"></nav>
-<div class="container">
-    <h2>UserRegister</h2>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" style="height: 100%">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>MWaiting</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        .form-signin {
+            max-width: 330px;
+            padding: 1rem;
+        }
+
+        .form-signin .form-floating:focus-within {
+            z-index: 2;
+        }
+
+        .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    </style>
+</head>
+
+
+<body class="d-flex align-items-center py-4 bg-body-tertiary" style="height: 100%">
+<main class="form-signin w-100 m-auto">
     <form action="/user/register" method="post">
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <!--        <img class="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">-->
+        <h1 class="h3 mb-3 fw-normal">회원가입</h1>
+
+        <div class="form-floating">
+            <input type="email" name="email" class="form-control" id="floatingInput"
+                   placeholder="name@example.com">
+            <label for="floatingInput">이메일</label>
             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
         </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+        <div class="form-floating">
+            <input type="password" name="password" class="form-control" id="floatingPassword"
+                   placeholder="Password">
+            <label for="floatingPassword">비밀번호</label>
         </div>
         <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-        <input type="submit" class="btn btn-primary" value="회원가입">
+        <input type="submit" class="btn btn-primary w-100 py-2" value="회원가입">
+        <br>
+        <br>
+        <button type="button" th:onclick="|location.href='@{/user/login}'|" class="btn btn-primary me-2">
+            로그인
+        </button>
+        <p class="mt-5 mb-3 text-body-secondary">© 2017–2024</p>
     </form>
-</div>
+</main>
 </body>
 </html>

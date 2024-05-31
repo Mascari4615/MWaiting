@@ -4,31 +4,42 @@
 <body>
 <nav th:replace="~{fragments.html :: navigation-bar}"></nav>
 <div class="container">
-    <h2>Index</h2>
-    <div>
-        Email : <a th:text="${email}"></a><br>
-        Role : <a th:text="${role}"></a><br>
-        <br>
+    <h2>홈</h2>
 
-        <a href="/restaurant/register">restaurant-register</a><br>
-        <a href="/user/list">user-list</a><br>
-        <a href="/restaurant/list">restaurant-list</a><br>
-        <br>
-
-        <th:block th:if="${#strings.isEmpty(ticket) == false && ticket.isStateWaiting()}">
-            Ticket<br>
-            id = <a th:text="${ticket.id}"></a><br>
-            restaurant = <a th:text="${ticket.restaurant.name}"></a><br>
-            number = <a th:text="${ticket.number}"></a><br>
-            user = <a th:text="${ticket.user.email}"></a><br>
-
-            앞으로 <a th:text="${preTicketCount}"></a> 팀 남았습니다.<br>
-        </th:block>
-    </div>
+    <th:block th:if="${#strings.isEmpty(ticket) == false && ticket.isStateWaiting()}">
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-primary-emphasis">웨이팅 정보</strong>
+                    <h3 class="mb-0"><a th:text="${ticket.restaurant.name}"></a></h3>
+                    <div class="mb-1 text-body-secondary"><a th:text="${ticket.number}"></a></div>
+                    <p class="card-text mb-auto">
+                        남은 팀 수 : <a th:text="${preTicketCount}"></a><br>
+                        예상 대기 시간 : <a th:text="${preTicketCount * 10}"></a>분<br>
+                    </p>
+                    <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                        Continue reading
+                        <svg class="bi">
+                            <use xlink:href="#chevron-right"></use>
+                        </svg>
+                    </a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg"
+                         role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                         focusable="false"><title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#55595c"></rect>
+                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </th:block>
 
     <div class="list-group">
         <a href="/restaurant/list" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-            <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+            <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32"
+                 class="rounded-circle flex-shrink-0">
             <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
                     <h6 class="mb-0">웨이팅</h6>
@@ -38,7 +49,8 @@
             </div>
         </a>
         <a href="/restaurant/list" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-            <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+            <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32"
+                 class="rounded-circle flex-shrink-0">
             <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
                     <h6 class="mb-0">식당 관리</h6>
