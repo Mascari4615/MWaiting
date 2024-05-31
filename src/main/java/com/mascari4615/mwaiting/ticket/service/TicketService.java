@@ -14,5 +14,11 @@ public interface TicketService {
 
     TicketDTO findById(Long id);
 
+    List<TicketDTO> findByUserId(Long userId);
+
+    List<TicketDTO> findByRestaurantId(Long restaurantId);
+
+    void delete(Long id);
+
     void setState(Long id, TicketState state);
 }

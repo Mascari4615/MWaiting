@@ -5,6 +5,7 @@ import com.mascari4615.mwaiting.ticket.repository.entity.TicketState;
 import com.mascari4615.mwaiting.ticket.service.TicketService;
 import com.mascari4615.mwaiting.user.controller.dto.UserDTO;
 import com.mascari4615.mwaiting.user.controller.dto.UserRegisterDTO;
+import com.mascari4615.mwaiting.user.repository.entity.User;
 import com.mascari4615.mwaiting.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,7 @@ public class UserController {
 //        return "hello";
 //    }
 
+    // 메인 페이지
     @GetMapping("/")
     public String index(Model model) {
 
@@ -71,13 +73,33 @@ public class UserController {
         {
             UserDTO userDTO = userService.findByEmail(email);
 
-            List<TicketDTO> ticketDTOS = ticketService.findAll();
+            System.out.println("findByUser");
+            List<TicketDTO> ticketsByUser = ticketService.findByUserId(userDTO.getId());
 
-            for (TicketDTO ticketDTO : ticketDTOS) {
-                if (Objects.equals(userDTO.getId(), ticketDTO.getUser().getId())) {
-                    if (ticketDTO.getState() == TicketState.WAITING)
-                        model.addAttribute("ticket", ticketDTO);
+            TicketDTO targetTicket = null;
+
+            for (TicketDTO ticketDTO : ticketsByUser) {
+                if (ticketDTO.getState() == TicketState.WAITING) {
+                    targetTicket = ticketDTO;
+                    break;
                 }
+            }
+
+            if (targetTicket != null) {
+                model.addAttribute("ticket", targetTicket);
+
+                List<TicketDTO> ticketsByRestaurant = ticketService.findByRestaurantId(ticketsByUser.get(0).getRestaurant().getId());
+                int preTicketCount = 0;
+
+                for (TicketDTO ticketDTO : ticketsByRestaurant) {
+                    if (ticketDTO.getId() == targetTicket.getId())
+                        break;
+
+                    if (ticketDTO.getState() == TicketState.WAITING) {
+                        preTicketCount++;
+                    }
+                }
+                model.addAttribute("preTicketCount", preTicketCount);
             }
         }
 
