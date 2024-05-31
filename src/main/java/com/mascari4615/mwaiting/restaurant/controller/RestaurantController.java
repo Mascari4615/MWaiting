@@ -7,7 +7,6 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.mascari4615.mwaiting.ticket.controller.DTO.TicketDTO;
 import com.mascari4615.mwaiting.ticket.service.TicketService;
-import com.mascari4615.mwaiting.ticket.service.TicketServiceImpl;
 import com.mascari4615.mwaiting.user.repository.UserRepository;
 import com.mascari4615.mwaiting.user.repository.entity.User;
 import com.mascari4615.mwaiting.restaurant.controller.dto.RestaurantDTO;
@@ -79,7 +78,7 @@ public class RestaurantController {
 
     //HACK
     @GetMapping("/restaurant/qr/{id}")
-    public ResponseEntity<byte[]> getUserQR(@PathVariable Long id) throws WriterException, IOException {
+    public ResponseEntity<byte[]> getRestaurantQR(@PathVariable Long id) throws WriterException, IOException {
         // QR 정보
         int width = 200;
         int height = 200;
