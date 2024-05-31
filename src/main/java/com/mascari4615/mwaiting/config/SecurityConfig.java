@@ -37,6 +37,14 @@ public class SecurityConfig {
                 .permitAll()
         );
 
+        http.logout(log -> log
+                .logoutUrl("/user/logout")
+                .logoutSuccessUrl("/user/login")
+                .deleteCookies("JSESSIONID")
+                // .addLogoutHandler()
+                // .logoutSuccessHandler()
+        );
+
         // http.csrf((auth) -> auth.disable());
 
         // https://substantial-park-a17.notion.site/10-36136f5a91f647b499dbcb5a884aff72

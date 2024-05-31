@@ -155,7 +155,7 @@ public class UserController {
         return "user-list";
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/user/detail/{id}")
     public String findById(@PathVariable Long id, Model model) {
         UserDTO userDTO = userService.findById(id);
         model.addAttribute("user", userDTO);
