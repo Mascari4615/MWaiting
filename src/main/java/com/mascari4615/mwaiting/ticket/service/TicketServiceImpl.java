@@ -19,16 +19,8 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void save(TicketDTO ticketDTO) {
-        Ticket ticket = Ticket.builder()
-                .user(ticketDTO.getUser())
-                .restaurant(ticketDTO.getRestaurant())
-                .number(100L)
-                .state(TicketState.WAITING)
-                .headCount(ticketDTO.getHeadCount())
-                .description(ticketDTO.getDescription())
-                .build();
-
-        ticketRepository.save(ticket); // 이건 이름 save 메소드여야 함
+        Ticket ticket = Ticket.toTicket(ticketDTO);
+        ticketRepository.save(ticket);
     }
 
     @Override

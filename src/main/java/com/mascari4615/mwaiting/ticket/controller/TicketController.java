@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -52,11 +53,21 @@ public class TicketController {
         Restaurant restaurant = restaurantData.get();
         System.out.println(restaurant);
 
+        Long ticketNumber = 100L;
+        List<TicketDTO> ticketDTOList = ticketService.findByRestaurantId(restaurant.getId());
+
+        for (TicketDTO ticketDTO : ticketDTOList) {
+            if (ticketDTO.getNumber() >= ticketNumber)
+                ticketNumber = ticketDTO.getNumber() + 1;
+        }
+
         TicketDTO ticketDTO = new TicketDTO();
         ticketDTO.setRestaurant(restaurant);
         ticketDTO.setUser(user);
-        ticketDTO.setDescription(ticketCreateDTO.getDescription());
+        ticketDTO.setNumber(ticketNumber);
         ticketDTO.setHeadCount(ticketCreateDTO.getHeadCount());
+        ticketDTO.setDescription(ticketCreateDTO.getDescription());
+        ticketDTO.setState(TicketState.WAITING);
 
         ticketService.save(ticketDTO);
 
