@@ -37,6 +37,15 @@ public class TicketController {
 
         model.addAttribute("restaurant", restaurant);
 
+        List<TicketDTO> ticketsByRestaurant = ticketService.findByRestaurantId(restaurantID);
+        int preTicketCount = 0;
+        for (TicketDTO ticketDTO : ticketsByRestaurant) {
+            if (ticketDTO.getState() == TicketState.WAITING) {
+                preTicketCount++;
+            }
+        }
+        model.addAttribute("preTicketCount", preTicketCount);
+
         return "ticket-create";
     }
 
@@ -74,10 +83,37 @@ public class TicketController {
         return "redirect:/";
     }
 
-    @GetMapping("/ticket/{ticketId}/reject")
+    @PostMapping("/ticket/{ticketId}/reject")
     public String rejectTicket(@PathVariable Long ticketId) {
         TicketDTO ticketDTO = ticketService.findById(ticketId);
         ticketService.setState(ticketId, TicketState.REJECTED);
         return "redirect:/restaurant-home/" + ticketDTO.getRestaurant().getId();
+    }
+
+    @PostMapping("/ticket/{ticketId}/cancle")
+    public String cancleTicket(@PathVariable Long ticketId) {
+        TicketDTO ticketDTO = ticketService.findById(ticketId);
+        ticketService.setState(ticketId, TicketState.CANCELED);
+        return "redirect:/";
+    }
+
+    @GetMapping("/ticket/detail/{ticketId}")
+    public String ticketDetail(@PathVariable Long ticketId, Model model) {
+        TicketDTO targetTicket = ticketService.findById(ticketId);
+        model.addAttribute("ticket", targetTicket);
+
+        List<TicketDTO> ticketsByRestaurant = ticketService.findByRestaurantId(targetTicket.getRestaurant().getId());
+        int preTicketCount = 0;
+
+        for (TicketDTO ticketDTO : ticketsByRestaurant) {
+            if (ticketDTO.getId() == targetTicket.getId())
+                break;
+
+            if (ticketDTO.getState() == TicketState.WAITING) {
+                preTicketCount++;
+            }
+        }
+        model.addAttribute("preTicketCount", preTicketCount);
+        return "ticket-detail";
     }
 }

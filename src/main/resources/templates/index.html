@@ -17,7 +17,7 @@
                         남은 팀 수 : <a th:text="${preTicketCount}"></a><br>
                         예상 대기 시간 : <a th:text="${preTicketCount * 10}"></a>분<br>
                     </p>
-                    <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                    <a th:href="@{|/ticket/detail/${ticket.id}|}" class="icon-link gap-1 icon-link-hover stretched-link">
                         Continue reading
                         <svg class="bi">
                             <use xlink:href="#chevron-right"></use>

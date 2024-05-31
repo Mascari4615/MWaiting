@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments.html :: head}"></head>
+<body>
+<nav th:replace="~{fragments.html :: navigation-bar}"></nav>
+<div class="container">
+    <h2>대기 정보</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>매장명</th>
+            <th>대기 번호</th>
+            <th>인원</th>
+            <th>메시지</th>
+            <th>상태</th>
+        </tr>
+        <tr>
+            <td th:text="${ticket.restaurant.name}"></td>
+            <td th:text="${ticket.number}"></td>
+            <td th:text="${ticket.headCount}"></td>
+            <td th:text="${ticket.description}"></td>
+            <td th:text="${ticket.state}"></td>
+        </tr>
+    </table>
+
+    남은 팀 수 : <a th:text="${preTicketCount}"></a><br>
+    예상 대기 시간 : <a th:text="${preTicketCount * 10}"></a>분<br>
+
+    <form id="ticketCancleForm" th:action="@{|/ticket/${ticket.id}/cancle|}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit" class="btn btn-primary me-2">대기 취소</button>
+    </form>
+</div>
+</body>
+</html>
