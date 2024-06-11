@@ -44,7 +44,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void setState(Long id, TicketState state) {
-        System.out.println(state);
+        // System.out.println(state);
         Optional<Ticket> ticketData = ticketRepository.findById(id);
         if (ticketData.isPresent()) {
             Ticket ticket = ticketData.get();

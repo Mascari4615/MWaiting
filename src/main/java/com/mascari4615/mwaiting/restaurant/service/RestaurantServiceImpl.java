@@ -60,4 +60,18 @@ public class RestaurantServiceImpl implements RestaurantService {
             return null;
         }
     }
+
+    @Override
+    public Optional<List<RestaurantDTO>> findByUserId(Long userId) {
+        Optional<List<Restaurant>> optionalRestaurant = restaurantRepository.findByUserId(userId);
+        if (optionalRestaurant.isPresent()) {
+            List<RestaurantDTO> restaurantDTOList = new ArrayList<>();
+            for (Restaurant restaurant : optionalRestaurant.get()) {
+                restaurantDTOList.add(RestaurantDTO.toRestaurantDTO(restaurant));
+            }
+            return Optional.of(restaurantDTOList);
+        }
+
+        return Optional.empty();
+    }
 }

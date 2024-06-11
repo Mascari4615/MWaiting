@@ -6,16 +6,20 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.mascari4615.mwaiting.ticket.controller.DTO.TicketDTO;
+import com.mascari4615.mwaiting.ticket.repository.entity.TicketState;
 import com.mascari4615.mwaiting.ticket.service.TicketService;
+import com.mascari4615.mwaiting.user.controller.dto.UserDTO;
 import com.mascari4615.mwaiting.user.repository.UserRepository;
 import com.mascari4615.mwaiting.user.repository.entity.User;
 import com.mascari4615.mwaiting.restaurant.controller.dto.RestaurantDTO;
 import com.mascari4615.mwaiting.restaurant.controller.dto.RestaurantRegisterRequest;
 import com.mascari4615.mwaiting.restaurant.service.RestaurantService;
+import com.mascari4615.mwaiting.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +38,7 @@ import java.util.Optional;
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
+    private final UserService userService;
     private final UserRepository userRepository;
     private final TicketService ticketService;
 
@@ -46,14 +51,14 @@ public class RestaurantController {
     @PostMapping("/restaurant/register")
     //public String registerRestaurant(@SessionAttribute(name = "userName", required = false) String userName, @ModelAttribute RestaurantRegisterRequest restaurantRegisterRequest) {
     public String registerRestaurant(@ModelAttribute RestaurantRegisterRequest restaurantRegisterRequest) {
-        System.out.println("RestaurantController.save");
-        System.out.println("RestaurantRegisterRequest = " + restaurantRegisterRequest);
+        // System.out.println("RestaurantController.save");
+        // System.out.println("RestaurantRegisterRequest = " + restaurantRegisterRequest);
 
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Optional<User> userData = userRepository.findByEmail(email);
         User user = userData.get();
-        System.out.println("userEntity = " + user);
+        // System.out.println("userEntity = " + user);
 
         restaurantService.save(restaurantRegisterRequest, user);
 
@@ -67,6 +72,23 @@ public class RestaurantController {
         // 어떠한 html로 가져갈 데이터가 있다면 model 사용
         model.addAttribute("restaurantList", restaurantDTOList);
         return "restaurant-list";
+    }
+
+    @GetMapping("/restaurant/my-list")
+    public String findByUser(Model model) // 스프링에서 제공하는 객체 표현
+    {
+        // 사용자가 로그인을 진행한 뒤 사용자 정보는 SecurityContextHolder에 의해서 서버 세션에 관리된다.
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if (email != null) {
+            UserDTO userDTO = userService.findByEmail(email);
+
+            Optional<List<RestaurantDTO>> restaurantDTOList = restaurantService.findByUserId(userDTO.getId());
+            // 어떠한 html로 가져갈 데이터가 있다면 model 사용
+            restaurantDTOList.ifPresent(restaurantDTOS -> model.addAttribute("restaurantList", restaurantDTOS));
+        }
+
+        return "restaurant-my-list";
     }
 
     @GetMapping("/restaurant/{id}")

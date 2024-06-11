@@ -10,6 +10,7 @@ import com.mascari4615.mwaiting.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -66,14 +67,14 @@ public class UserController {
         model.addAttribute("email", email);
         model.addAttribute("role", role);
 
-        System.out.println("email:" + email);
-        System.out.println("role: " + role);
+        // System.out.println("email:" + email);
+        // System.out.println("role: " + role);
 
         if (email != null)
         {
             UserDTO userDTO = userService.findByEmail(email);
 
-            System.out.println("findByUser");
+            // System.out.println("findByUser");
             List<TicketDTO> ticketsByUser = ticketService.findByUserId(userDTO.getId());
 
             TicketDTO targetTicket = null;
@@ -106,6 +107,57 @@ public class UserController {
         return "index";
     }
 
+    @GetMapping("/polling")
+    public ResponseEntity<String> polling() {
+        String data = "";
+
+        // 사용자가 로그인을 진행한 뒤 사용자 정보는 SecurityContextHolder에 의해서 서버 세션에 관리된다.
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+        GrantedAuthority auth = iter.next();
+
+        // System.out.println("email:" + email);
+
+        if (email != null)
+        {
+            UserDTO userDTO = userService.findByEmail(email);
+
+            // System.out.println("findByUser");
+            List<TicketDTO> ticketsByUser = ticketService.findByUserId(userDTO.getId());
+
+            TicketDTO targetTicket = null;
+
+            for (TicketDTO ticketDTO : ticketsByUser) {
+                if (ticketDTO.getState() == TicketState.WAITING) {
+                    targetTicket = ticketDTO;
+                    break;
+                }
+            }
+
+            if (targetTicket != null) {
+                List<TicketDTO> ticketsByRestaurant = ticketService.findByRestaurantId(ticketsByUser.get(0).getRestaurant().getId());
+                int preTicketCount = 0;
+
+                for (TicketDTO ticketDTO : ticketsByRestaurant) {
+                    if (ticketDTO.getId() == targetTicket.getId())
+                        break;
+
+                    if (ticketDTO.getState() == TicketState.WAITING) {
+                        preTicketCount++;
+                    }
+                }
+
+                data = String.valueOf(preTicketCount);
+            }
+        }
+
+        return ResponseEntity.ok(data);
+    }
+
     // 회원가입 페이지 출력 요청
     @GetMapping("/user/register")
     public String registerForm() {
@@ -115,8 +167,8 @@ public class UserController {
     @PostMapping("/user/register")
     // public String join(@RequestBody JoinRequest joinRequest) {
     public String registerUser(@ModelAttribute UserRegisterDTO userRegisterDTO) {
-        System.out.println("UserController.registerUser");
-        System.out.println("UserRegisterDTO = " + userRegisterDTO);
+        // System.out.println("UserController.registerUser");
+        // System.out.println("UserRegisterDTO = " + userRegisterDTO);
 
         String result = userService.register(userRegisterDTO);
 

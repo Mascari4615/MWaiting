@@ -29,11 +29,11 @@ public class TicketController {
 
     @GetMapping("/ticket/{restaurantID}")
     public String createTicketForm(Model model, @PathVariable Long restaurantID) {
-        System.out.println("createTicketForm");
+        // System.out.println("createTicketForm");
 
         Optional<Restaurant> restaurantEntity = restaurantRepository.findById(restaurantID);
         Restaurant restaurant = restaurantEntity.get();
-        System.out.println(restaurant);
+        // System.out.println(restaurant);
 
         model.addAttribute("restaurant", restaurant);
 
@@ -51,16 +51,16 @@ public class TicketController {
 
     @PostMapping("/ticket/create")
     public String createTicket(@ModelAttribute TicketCreateDTO ticketCreateDTO) {
-        System.out.println("createTicket");
+        // System.out.println("createTicket");
 
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<User> userData = userRepository.findByEmail(email);
         User user = userData.get();
-        System.out.println(user);
+        // System.out.println(user);
 
         Optional<Restaurant> restaurantData = restaurantRepository.findById(ticketCreateDTO.getRestaurantId());
         Restaurant restaurant = restaurantData.get();
-        System.out.println(restaurant);
+        // System.out.println(restaurant);
 
         Long ticketNumber = 100L;
         List<TicketDTO> ticketDTOList = ticketService.findByRestaurantId(restaurant.getId());

@@ -4,7 +4,7 @@
 <body>
 <nav th:replace="~{fragments.html :: navigation-bar}"></nav>
 <div class="container">
-    <h2>RestaurantDetail</h2>
+    <h2>식당 정보</h2>
     <table class="table table-striped">
         <tr>
             <th>id</th>
@@ -26,7 +26,6 @@
         </tr>
     </table>
     <a th:href="@{|/restaurant/qr/${restaurant.id}|}">QR보기</a>
-    <a th:href="@{|/restaurant-home/${restaurant.id}|}">관리 화면</a>
 </div>
 </body>
 </html>

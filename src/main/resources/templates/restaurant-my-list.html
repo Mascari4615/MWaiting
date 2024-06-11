@@ -4,18 +4,23 @@
 <body>
 <nav th:replace="~{fragments.html :: navigation-bar}"></nav>
 <div class="container">
-    <h2>식당 목록</h2>
+    <h2>내 식당</h2>
     <table class="table table-striped">
         <tr>
-            <th>이름</th>
-            <th>연락처</th>
-            <th>주소</th>
-            <th>운영시간</th>
-            <th>설명</th>
+            <th>id</th>
+            <th>user</th>
+            <th>name</th>
+            <th>phoneNumber</th>
+            <th>address</th>
+            <th>time</th>
+            <th>description</th>
             <th>상세조회</th>
-            <th>웨이팅</th>
+            <th>관리화면</th>
+            <th>삭제</th>
         </tr>
         <tr th:each="restaurant: ${restaurantList}">
+            <td th:text="${restaurant.id}"></td>
+            <td th:text="${restaurant.user.getEmail}"></td>
             <td th:text="${restaurant.getName}"></td>
             <td th:text="${restaurant.getPhoneNumber}"></td>
             <td th:text="${restaurant.getAddress}"></td>
@@ -27,12 +32,20 @@
                 </button>
             </td>
             <td>
-                <button type="button" th:onclick="|location.href='@{|/ticket/${restaurant.id}|}'|" class="btn btn-primary me-2">
-                    웨이팅
+                <button type="button" th:onclick="|location.href='@{|/restaurant-home/${restaurant.id}|}'|" class="btn btn-primary me-2">
+                    관리화면
+                </button>
+            </td>
+            <td>
+                <button type="button" th:onclick="|location.href='@{|/restaurant/delete/${restaurant.id}|}'|" class="btn btn-primary me-2">
+                    삭제
                 </button>
             </td>
         </tr>
     </table>
+    <button type="button" th:onclick="|location.href='@{/restaurant/register}'|" class="btn btn-primary me-2">
+        매장 등록
+    </button>
 </div>
 </body>
 </html>

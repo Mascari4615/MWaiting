@@ -38,7 +38,7 @@ public class SecurityConfig {
         );
 
         http.logout(log -> log
-                .logoutUrl("/user/logout")
+                        .logoutUrl("/user/logout")
                 .logoutSuccessUrl("/user/login")
                 .deleteCookies("JSESSIONID")
                 // .addLogoutHandler()

@@ -1,6 +1,46 @@
 <!DOCTYPE html>
 <html lang="kr" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments.html :: head}"></head>
+<script>
+    // 폴링 클라이언트 측 JavaScript 코드
+    function pollServer() {
+        getData();
+        setInterval(() => getData(), 3000); // 3초마다 폴링
+    }
+
+    function getData()
+    {
+        fetch("/polling")
+            .then(response => response.text())
+            .then(data => {
+                console.log("서버로부터 데이터 수신:", data);
+
+                const info = document.getElementById("waiting-info");
+                if (info != null) {
+                    info.style.display = data.length === 0 ? "none" : "";
+
+                    const text = document.getElementById("waiting-info-text");
+                    if (text != null) {
+                        const preTicketCount = data;
+
+                        if (preTicketCount === "0")
+                        {
+                            data = "매장으로 와서 대기해주세요.";
+                        }
+                        else
+                        {
+                            data = "남은 팀 수 : " + preTicketCount + ", ";
+                            data += "예상 대기 시간 : " + (preTicketCount * 10)+ "분";
+                        }
+
+                        text.textContent = data;
+                    }
+                }
+            });
+    }
+
+    pollServer();
+</script>
 <body>
 <nav th:replace="~{fragments.html :: navigation-bar}"></nav>
 <div class="container">
@@ -8,12 +48,12 @@
 
     <th:block th:if="${#strings.isEmpty(ticket) == false && ticket.isStateWaiting()}">
         <div class="col-md-6">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" id="waiting-info">
                 <div class="col p-4 d-flex flex-column position-static">
                     <strong class="d-inline-block mb-2 text-primary-emphasis">웨이팅 정보</strong>
                     <h3 class="mb-0"><a th:text="${ticket.restaurant.name}"></a></h3>
                     <div class="mb-1 text-body-secondary"><a th:text="${ticket.number}"></a></div>
-                    <p class="card-text mb-auto">
+                    <p class="card-text mb-auto" id="waiting-info-text">
                         남은 팀 수 : <a th:text="${preTicketCount}"></a><br>
                         예상 대기 시간 : <a th:text="${preTicketCount * 10}"></a>분<br>
                     </p>
@@ -48,7 +88,7 @@
                 <small class="opacity-50 text-nowrap">now</small>
             </div>
         </a>
-        <a href="/restaurant/list" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+        <a href="/restaurant/my-list" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
             <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32"
                  class="rounded-circle flex-shrink-0">
             <div class="d-flex gap-2 w-100 justify-content-between">
