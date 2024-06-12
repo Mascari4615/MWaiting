@@ -25,7 +25,7 @@
     남은 팀 수 : <a th:text="${preTicketCount}"></a><br>
     예상 대기 시간 : <a th:text="${preTicketCount * 10}"></a>분<br>
 
-    <form id="ticketCancleForm" th:action="@{|/ticket/${ticket.id}/cancle|}" method="post">
+    <form id="ticketCancelForm" th:action="@{|/ticket/${ticket.id}/cancel|}" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <button type="submit" class="btn btn-primary me-2">대기 취소</button>
     </form>

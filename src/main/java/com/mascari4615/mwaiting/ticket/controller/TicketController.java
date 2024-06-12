@@ -83,6 +83,13 @@ public class TicketController {
         return "redirect:/";
     }
 
+    @PostMapping("/ticket/{ticketId}/call")
+    public String callTicket(@PathVariable Long ticketId) {
+        TicketDTO ticketDTO = ticketService.findById(ticketId);
+        ticketService.setState(ticketId, TicketState.CALLED);
+        return "redirect:/restaurant-home/" + ticketDTO.getRestaurant().getId();
+    }
+
     @PostMapping("/ticket/{ticketId}/reject")
     public String rejectTicket(@PathVariable Long ticketId) {
         TicketDTO ticketDTO = ticketService.findById(ticketId);
@@ -90,9 +97,22 @@ public class TicketController {
         return "redirect:/restaurant-home/" + ticketDTO.getRestaurant().getId();
     }
 
-    @PostMapping("/ticket/{ticketId}/cancle")
-    public String cancleTicket(@PathVariable Long ticketId) {
+    @PostMapping("/ticket/{ticketId}/process")
+    public String processTicket(@PathVariable Long ticketId) {
         TicketDTO ticketDTO = ticketService.findById(ticketId);
+        ticketService.setState(ticketId, TicketState.PROCESSING);
+        return "redirect:/restaurant-home/" + ticketDTO.getRestaurant().getId();
+    }
+
+    @PostMapping("/ticket/{ticketId}/complete")
+    public String completeTicket(@PathVariable Long ticketId) {
+        TicketDTO ticketDTO = ticketService.findById(ticketId);
+        ticketService.setState(ticketId, TicketState.COMPLETED);
+        return "redirect:/restaurant-home/" + ticketDTO.getRestaurant().getId();
+    }
+
+    @PostMapping("/ticket/{ticketId}/cancel")
+    public String cancelTicket(@PathVariable Long ticketId) {
         ticketService.setState(ticketId, TicketState.CANCELED);
         return "redirect:/";
     }

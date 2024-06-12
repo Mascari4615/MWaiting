@@ -20,8 +20,7 @@ public class TicketDTO {
     private String description;
     private TicketState state;
 
-    public static TicketDTO toTicketDTO(Ticket ticket)
-    {
+    public static TicketDTO toTicketDTO(Ticket ticket) {
         TicketDTO ticketDTO = new TicketDTO();
         ticketDTO.setId(ticket.getId());
         ticketDTO.setRestaurant(ticket.getRestaurant());
@@ -35,5 +34,13 @@ public class TicketDTO {
 
     public boolean isStateWaiting() {
         return state == TicketState.WAITING;
+    }
+
+    public boolean canProcessing() {
+        return state == TicketState.CALLED;
+    }
+
+    public boolean canComplete() {
+        return state == TicketState.PROCESSING;
     }
 }

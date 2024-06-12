@@ -70,8 +70,7 @@ public class UserController {
         // System.out.println("email:" + email);
         // System.out.println("role: " + role);
 
-        if (email != null)
-        {
+        if (email != null) {
             UserDTO userDTO = userService.findByEmail(email);
 
             // System.out.println("findByUser");
@@ -80,27 +79,36 @@ public class UserController {
             TicketDTO targetTicket = null;
 
             for (TicketDTO ticketDTO : ticketsByUser) {
-                if (ticketDTO.getState() == TicketState.WAITING) {
+                if (ticketDTO.getState() == TicketState.WAITING ||
+                        ticketDTO.getState() == TicketState.CALLED ||
+                        ticketDTO.getState() == TicketState.REJECTED) {
                     targetTicket = ticketDTO;
                     break;
                 }
             }
 
             if (targetTicket != null) {
+
                 model.addAttribute("ticket", targetTicket);
+                model.addAttribute("preTicketCount", 0);
+                if (targetTicket.getState() == TicketState.WAITING) {
+                    List<TicketDTO> ticketsByRestaurant = ticketService.findByRestaurantId(ticketsByUser.get(0).getRestaurant().getId());
+                    int preTicketCount = 0;
 
-                List<TicketDTO> ticketsByRestaurant = ticketService.findByRestaurantId(ticketsByUser.get(0).getRestaurant().getId());
-                int preTicketCount = 0;
+                    for (TicketDTO ticketDTO : ticketsByRestaurant) {
+                        if (ticketDTO.getId() == targetTicket.getId())
+                            break;
 
-                for (TicketDTO ticketDTO : ticketsByRestaurant) {
-                    if (ticketDTO.getId() == targetTicket.getId())
-                        break;
-
-                    if (ticketDTO.getState() == TicketState.WAITING) {
-                        preTicketCount++;
+                        if (ticketDTO.getState() == TicketState.WAITING) {
+                            preTicketCount++;
+                        }
                     }
+                    model.addAttribute("preTicketCount", preTicketCount);
                 }
-                model.addAttribute("preTicketCount", preTicketCount);
+                else
+                {
+
+                }
             }
         }
 
@@ -122,8 +130,7 @@ public class UserController {
 
         // System.out.println("email:" + email);
 
-        if (email != null)
-        {
+        if (email != null) {
             UserDTO userDTO = userService.findByEmail(email);
 
             // System.out.println("findByUser");
@@ -132,26 +139,34 @@ public class UserController {
             TicketDTO targetTicket = null;
 
             for (TicketDTO ticketDTO : ticketsByUser) {
-                if (ticketDTO.getState() == TicketState.WAITING) {
+                if (ticketDTO.getState() == TicketState.WAITING ||
+                        ticketDTO.getState() == TicketState.CALLED ||
+                        ticketDTO.getState() == TicketState.REJECTED) {
                     targetTicket = ticketDTO;
                     break;
                 }
             }
 
             if (targetTicket != null) {
-                List<TicketDTO> ticketsByRestaurant = ticketService.findByRestaurantId(ticketsByUser.get(0).getRestaurant().getId());
-                int preTicketCount = 0;
+                if (targetTicket.getState() == TicketState.WAITING) {
+                    List<TicketDTO> ticketsByRestaurant = ticketService.findByRestaurantId(ticketsByUser.get(0).getRestaurant().getId());
+                    int preTicketCount = 0;
 
-                for (TicketDTO ticketDTO : ticketsByRestaurant) {
-                    if (ticketDTO.getId() == targetTicket.getId())
-                        break;
+                    for (TicketDTO ticketDTO : ticketsByRestaurant) {
+                        if (Objects.equals(ticketDTO.getId(), targetTicket.getId()))
+                            break;
 
-                    if (ticketDTO.getState() == TicketState.WAITING) {
-                        preTicketCount++;
+                        if (ticketDTO.getState() == TicketState.WAITING) {
+                            preTicketCount++;
+                        }
                     }
-                }
 
-                data = String.valueOf(preTicketCount);
+                    data = String.valueOf(preTicketCount);
+                    System.out.println("A : " + data);
+                } else {
+                    data = String.valueOf(targetTicket.getState());
+                    System.out.println("B : " + data);
+                }
             }
         }
 

@@ -21,19 +21,22 @@
 
                     const text = document.getElementById("waiting-info-text");
                     if (text != null) {
-                        const preTicketCount = data;
-
-                        if (preTicketCount === "0")
+                        if (data === "CALLED")
                         {
-                            data = "매장으로 와서 대기해주세요.";
+                            text.textContent = "매장으로 와서 대기해주세요.";
+                        }
+                        else if (data === "REJECTED")
+                        {
+                            text.textContent = "예약이 거절됐습니다. 예약을 취소해주세요.";
                         }
                         else
                         {
+                            const preTicketCount = data;
+
                             data = "남은 팀 수 : " + preTicketCount + ", ";
                             data += "예상 대기 시간 : " + (preTicketCount * 10)+ "분";
+                            text.textContent = data;
                         }
-
-                        text.textContent = data;
                     }
                 }
             });
@@ -46,7 +49,7 @@
 <div class="container">
     <h2>홈</h2>
 
-    <th:block th:if="${#strings.isEmpty(ticket) == false && ticket.isStateWaiting()}">
+    <th:block th:if="${#strings.isEmpty(ticket) == false}">
         <div class="col-md-6">
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" id="waiting-info">
                 <div class="col p-4 d-flex flex-column position-static">

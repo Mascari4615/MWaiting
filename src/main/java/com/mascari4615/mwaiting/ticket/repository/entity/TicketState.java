@@ -7,6 +7,7 @@ public enum TicketState {
     WAITING("WAITING"),
     CANCELED("CANCELED"),
     REJECTED("REJECTED"),
+    CALLED("CALLED"),
     PROCESSING("PROCESSING"),
     COMPLETED("COMPLETED");
 
